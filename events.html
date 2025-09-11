@@ -1,48 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Events — Club Name</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <title>MEXSA @ Syracuse — Eventos</title>
+  <meta name="description" content="Calendario de próximos eventos de MEXSA @ Syracuse." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html">Club Name</a>
+      <a class="brand" href="index.html">MEXSA<span class="pill">SYR</span></a>
       <nav id="nav" class="nav">
-        <a href="index.html">Home</a>
-        <a href="events.html" aria-current="page">Events</a>
-        <a href="about.html">About</a>
-        <a class="cta" href="join.html">Join</a>
+        <a href="index.html">Inicio</a>
+        <a href="events.html" aria-current="page">Eventos</a>
+        <a href="about.html">Nosotros</a>
+        <a href="join.html" class="cta">Únete</a>
       </nav>
       <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
-  <main class="container">
-    <h1>Upcoming Events</h1>
-    <div class="grid">
-      <article class="event">
-        <h2>Tortilla Workshop</h2>
-        <p><strong>Date:</strong> Sept 16, 7–9 PM • <strong>Location:</strong> Student Center Kitchen</p>
-        <p>Learn traditional techniques, meet new friends, and eat fresh tortillas.</p>
-      </article>
-
-      <article class="event">
-        <h2>General Body Meeting</h2>
-        <p><strong>Date:</strong> Sept 23, 6–7 PM • <strong>Location:</strong> HBC 020</p>
-        <p>Club updates, upcoming collabs, and planning committee signups.</p>
-      </article>
+  <!-- Hero -->
+  <section class="hero hero--stadium">
+    <div class="hero__overlay">
+      <div class="container hero__content">
+        <h1 class="hero__title">Calendario de Eventos</h1>
+        <p class="hero__subtitle">Conoce nuestras próximas actividades, talleres y celebraciones.</p>
+      </div>
     </div>
-  </main>
+  </section>
 
-  <footer class="site-footer">
+  <!-- Fixture-style event list -->
+  <section class="section">
     <div class="container">
-      <p>© <span id="year"></span> Club Name</p>
+      <div class="section__head">
+        <h2>Próximos Eventos</h2>
+      </div>
+
+      <div class="grid">
+        <!-- Event 1 -->
+        <article class="matchcard">
+          <div class="matchcard__header">Taller de Tortillas</div>
+          <div class="matchcard__row">
+            <div class="matchcard__team">
+              <span class="crest">MX</span>
+              <span class="teamname">MEXSA</span>
+            </div>
+            <div class="matchcard__vs">x</div>
+            <div class="matchcard__team">
+              <span class="crest alt">SU</span>
+              <span class="teamname">Campus</span>
+            </div>
+          </div>
+          <div class="matchcard__meta">
+            <span class="badge">16 Sept · 7:00 PM</span>
+            <span class="dot"></span>
+            <span class="badge">Centro Estudiantil Cocina</span>
+          </div>
+          <p>Aprende la técnica tradicional de hacer tortillas desde cero. Ingredientes incluidos 🍴</p>
+          <a class="btn wide" href="#">Ver más</a>
+        </article>
+
+        <!-- Event 2 -->
+        <article class="matchcard">
+          <div class="matchcard__header">Reunión General (GBM)</div>
+          <div class="matchcard__row">
+            <div class="matchcard__team">
+              <span class="crest">MX</span>
+              <span class="teamname">MEXSA</span>
+            </div>
+            <div class="matchcard__vs">x</div>
+            <div class="matchcard__team">
+              <span class="crest alt">SU</span>
+              <span class="teamname">Campus</span>
+            </div>
+          </div>
+          <div class="matchcard__meta">
+            <span class="badge">23 Sept · 6:00 PM</span>
+            <span class="dot"></span>
+            <span class="badge">HBC 020</span>
+          </div>
+          <p>Conoce a otros miembros, recibe actualizaciones y súmate a un comité 🤝</p>
+          <a class="btn wide" href="#">Ver más</a>
+        </article>
+
+        <!-- Event 3 -->
+        <article class="matchcard">
+          <div class="matchcard__header">Fiesta de Independencia</div>
+          <div class="matchcard__row">
+            <div class="matchcard__team">
+              <span class="crest">MX</span>
+              <span class="teamname">MEXSA</span>
+            </div>
+            <div class="matchcard__vs">x</div>
+            <div class="matchcard__team">
+              <span class="crest alt">SU</span>
+              <span class="teamname">Campus</span>
+            </div>
+          </div>
+          <div class="matchcard__meta">
+            <span class="badge">15 Sept · 8:00 PM</span>
+            <span class="dot"></span>
+            <span class="badge">Goldstein Auditorium</span>
+          </div>
+          <p>Una noche de música, baile y orgullo mexicano 🇲🇽 ¡No te lo pierdas!</p>
+          <a class="btn wide" href="#">Ver más</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footergrid">
+      <div>
+        <div class="brand brand--footer">MEXSA<span class="pill">SYR</span></div>
+        <p class="muted">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+      </div>
+      <nav class="footernav">
+        <a href="index.html">Inicio</a>
+        <a href="events.html" aria-current="page">Eventos</a>
+        <a href="about.html">Nosotros</a>
+        <a href="join.html">Únete</a>
+      </nav>
+      <div class="footercta">
+        <p class="muted">¿Preguntas? <a href="mailto:example@syr.edu">example@syr.edu</a></p>
+        <a class="btn" href="join.html">Hazte miembro</a>
+      </div>
+    </div>
+    <div class="container legal">
+      <p>© <span id="year"></span> MEXSA @ Syracuse • All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
+
