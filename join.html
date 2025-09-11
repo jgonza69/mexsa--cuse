@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join — Club Name</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Club Name</a>
+      <nav id="nav" class="nav">
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="about.html">About</a>
+        <a class="cta" href="join.html" aria-current="page">Join</a>
+      </nav>
+      <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Join the Club</h1>
+    <p>Fill out this short form and we’ll reach out with next steps.</p>
+
+    <form action="https://formspree.io/f/your-form-id" method="POST" class="form">
+      <label>Full name
+        <input type="text" name="name" required />
+      </label>
+
+      <label>Email
+        <input type="email" name="email" required />
+      </label>
+
+      <label>Year/Major
+        <input type="text" name="year_major" />
+      </label>
+
+      <label>How would you like to be involved?
+        <textarea name="message" rows="4" placeholder="Volunteering, committees, socials, etc."></textarea>
+      </label>
+
+      <button class="btn" type="submit">Submit</button>
+    </form>
+
+    <p class="note">Tip: Replace the <code>action</code> URL with your Formspree/Google Form link.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Club Name</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

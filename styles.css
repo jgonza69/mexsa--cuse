@@ -1,0 +1,54 @@
+/* Minimal, clean, mobile-first styles */
+* { box-sizing: border-box; }
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #666666;
+  --brand: #d81e5b; /* change to your brand color */
+  --brand-2: #0d9488;
+  --card: #f6f6f6;
+}
+html, body { margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+
+.container { width: min(1040px, 92vw); margin: 0 auto; }
+.site-header { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid #eee; z-index: 10; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
+.brand { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--text); }
+.nav a { margin-left: 1rem; text-decoration: none; color: var(--text); }
+.nav a[aria-current="page"] { font-weight: 700; }
+.nav .cta { padding: 0.5rem 0.75rem; border: 1px solid var(--text); border-radius: 8px; }
+
+.menu-btn { display: none; font-size: 1.4rem; background: transparent; border: 1px solid #ddd; padding: 0.25rem 0.5rem; border-radius: 6px; }
+
+.hero { padding: 4rem 0 2rem; text-align: center; }
+.hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0.25rem 0 0.5rem; }
+.accent { color: var(--brand); }
+.actions { display: flex; gap: 0.75rem; justify-content: center; margin-top: 0.75rem; }
+
+.btn { display: inline-block; padding: 0.7rem 1rem; border-radius: 10px; background: var(--brand); color: white; text-decoration: none; font-weight: 700; }
+.btn.secondary { background: var(--brand-2); }
+
+.highlights { padding: 2rem 0 3rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+.card { background: var(--card); border-radius: 14px; padding: 1rem; }
+.inline { font-weight: 700; text-decoration: none; color: var(--brand); }
+
+.event { background: var(--card); border-left: 4px solid var(--brand-2); padding: 1rem; border-radius: 10px; }
+
+.site-footer { border-top: 1px solid #eee; padding: 1.25rem 0; margin-top: 2rem; text-align: center; color: var(--muted); }
+
+.leaders { list-style: none; padding: 0; }
+.leaders li { padding: 0.25rem 0; }
+
+.form { display: grid; gap: 0.75rem; max-width: 560px; }
+label { font-weight: 600; display: grid; gap: 0.35rem; }
+input, textarea { width: 100%; padding: 0.7rem; border-radius: 10px; border: 1px solid #ddd; }
+.note { color: var(--muted); margin-top: 0.5rem; }
+
+/* Responsive nav */
+@media (max-width: 720px) {
+  .nav { position: absolute; top: 56px; right: 4vw; background: var(--bg); border: 1px solid #eee; border-radius: 10px; padding: 0.5rem; display: none; }
+  .nav.open { display: grid; }
+  .menu-btn { display: inline-block; }
+}
