@@ -1,44 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — Club Name</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <title>MEXSA @ Syracuse — Nosotros</title>
+  <meta name="description" content="Conoce la misión, liderazgo e historia de MEXSA @ Syracuse." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html">Club Name</a>
+      <a class="brand" href="index.html">MEXSA<span class="pill">SYR</span></a>
       <nav id="nav" class="nav">
-        <a href="index.html">Home</a>
-        <a href="events.html">Events</a>
-        <a href="about.html" aria-current="page">About</a>
-        <a class="cta" href="join.html">Join</a>
+        <a href="index.html">Inicio</a>
+        <a href="events.html">Eventos</a>
+        <a href="about.html" aria-current="page">Nosotros</a>
+        <a class="cta" href="join.html">Únete</a>
       </nav>
       <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
-  <main class="container">
-    <h1>About Our Club</h1>
-    <p>Write your mission, values, and what makes your community special. Include a short history and how students can benefit by joining.</p>
+  <!-- Hero -->
+  <section class="hero hero--stadium">
+    <div class="hero__overlay">
+      <div class="container hero__content">
+        <h1 class="hero__title">Quiénes Somos</h1>
+        <p class="hero__subtitle">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+      </div>
+    </div>
+  </section>
 
-    <h2>Leadership</h2>
-    <ul class="leaders">
-      <li><strong>President:</strong> Name</li>
-      <li><strong>Vice President:</strong> Name</li>
-      <li><strong>Treasurer:</strong> Name</li>
-      <li><strong>Secretary:</strong> Name</li>
-    </ul>
-  </main>
-
-  <footer class="site-footer">
+  <!-- Mission & Values -->
+  <section class="section">
     <div class="container">
-      <p>© <span id="year"></span> Club Name</p>
+      <div class="section__head">
+        <h2>Misión y Valores</h2>
+      </div>
+
+      <div class="newsgrid">
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Nuestra misión</h3>
+            <p class="card__excerpt">
+              Fomentar comunidad para estudiantes mexicanos y aliados, compartir nuestras tradiciones y crear
+              espacios de apoyo, aprendizaje y liderazgo en el campus.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Cultura & Comunidad</h3>
+            <p class="card__excerpt">Eventos abiertos, respeto por nuestras raíces y colaboración con otros clubs.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Aprendizaje</h3>
+            <p class="card__excerpt">Talleres, charlas y actividades para conocer y compartir conocimientos.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Servicio</h3>
+            <p class="card__excerpt">Vinculación con la comunidad local y apoyo a nuevas generaciones.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership / Squad -->
+  <section class="strip">
+    <div class="container">
+      <div class="section__head">
+        <h2>Liderazgo 2024–25</h2>
+      </div>
+
+      <div class="newsgrid">
+        <!-- TODO: Reemplaza con fotos reales: <img class="card__img" src="assets/img/president.jpg" alt="Presidenta/o"> -->
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Presidenta/o — <span class="muted">Nombre Apellido</span></h3>
+            <p class="card__excerpt">Especialidad/Año. Intereses: organización, cultura, outreach.</p>
+            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Vicepresidente/a — <span class="muted">Nombre Apellido</span></h3>
+            <p class="card__excerpt">Coordina comités y apoyo logístico de eventos.</p>
+            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Tesorería — <span class="muted">Nombre Apellido</span></h3>
+            <p class="card__excerpt">Presupuesto, compras y reportes financieros.</p>
+            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Comunicación — <span class="muted">Nombre Apellido</span></h3>
+            <p class="card__excerpt">Redes sociales, foto/video y diseño.</p>
+            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Short History / Timeline -->
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section__head">
+        <h2>Nuestra Historia</h2>
+        <a class="link" href="events.html">Ver eventos →</a>
+      </div>
+
+      <div class="mediagrid">
+        <div class="media card">
+          <div class="media__thumb skeleton" aria-hidden="true"></div>
+          <h4 class="media__title">2021 — Fundación</h4>
+          <p class="muted">MEXSA nace con el objetivo de crear comunidad y celebrar nuestra cultura.</p>
+        </div>
+        <div class="media card">
+          <div class="media__thumb skeleton" aria-hidden="true"></div>
+          <h4 class="media__title">2023 — Primer gran taller</h4>
+          <p class="muted">Taller de cocina con 100+ asistentes y colaboración con clubs aliados.</p>
+        </div>
+        <div class="media card">
+          <div class="media__thumb skeleton" aria-hidden="true"></div>
+          <h4 class="media__title">2025 — Expansión</h4>
+          <p class="muted">Nuevos comités y programas de mentoría con alumni.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Join -->
+  <section class="section">
+    <div class="container">
+      <div class="section__head">
+        <h2>Contacto</h2>
+      </div>
+      <div class="grid" style="grid-template-columns: 2fr 1fr; gap:1rem;">
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Escríbenos</h3>
+            <p class="card__excerpt">¿Tienes preguntas, ideas o quieres colaborar?</p>
+            <!-- TODO: actualiza email y redes -->
+            <p class="muted">Email: <a class="inline" href="mailto:example@syr.edu">example@syr.edu</a></p>
+            <p class="muted">Instagram: <a class="inline" href="#" target="_blank" rel="noopener">instagram.com/mexsa</a></p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Hazte miembro</h3>
+            <p class="card__excerpt">Únete y recibe actualizaciones de eventos y oportunidades.</p>
+            <a class="btn wide" href="join.html">Únete ahora</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footergrid">
+      <div>
+        <div class="brand brand--footer">MEXSA<span class="pill">SYR</span></div>
+        <p class="muted">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+      </div>
+      <nav class="footernav">
+        <a href="index.html">Inicio</a>
+        <a href="events.html">Eventos</a>
+        <a href="about.html" aria-current="page">Nosotros</a>
+        <a href="join.html">Únete</a>
+      </nav>
+      <div class="footercta">
+        <p class="muted">¿Preguntas? <a href="mailto:example@syr.edu">example@syr.edu</a></p>
+        <a class="btn" href="join.html">Hazte miembro</a>
+      </div>
+    </div>
+    <div class="container legal">
+      <p>© <span id="year"></span> MEXSA @ Syracuse • All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
+

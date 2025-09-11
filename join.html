@@ -1,58 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Join — Club Name</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <title>MEXSA @ Syracuse — Únete</title>
+  <meta name="description" content="Hazte miembro de MEXSA @ Syracuse y recibe actualizaciones de eventos y oportunidades." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html">Club Name</a>
+      <a class="brand" href="index.html">MEXSA<span class="pill">SYR</span></a>
       <nav id="nav" class="nav">
-        <a href="index.html">Home</a>
-        <a href="events.html">Events</a>
-        <a href="about.html">About</a>
-        <a class="cta" href="join.html" aria-current="page">Join</a>
+        <a href="index.html">Inicio</a>
+        <a href="events.html">Eventos</a>
+        <a href="about.html">Nosotros</a>
+        <a href="join.html" aria-current="page" class="cta">Únete</a>
       </nav>
       <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
-  <main class="container">
-    <h1>Join the Club</h1>
-    <p>Fill out this short form and we’ll reach out with next steps.</p>
+  <!-- Hero -->
+  <section class="hero hero--stadium">
+    <div class="hero__overlay">
+      <div class="container hero__content">
+        <h1 class="hero__title">Hazte Miembro</h1>
+        <p class="hero__subtitle">Únete a MEXSA y recibe noticias, participa en eventos y forma parte de nuestra comunidad.</p>
+      </div>
+    </div>
+  </section>
 
-    <form action="https://formspree.io/f/your-form-id" method="POST" class="form">
-      <label>Full name
-        <input type="text" name="name" required />
-      </label>
-
-      <label>Email
-        <input type="email" name="email" required />
-      </label>
-
-      <label>Year/Major
-        <input type="text" name="year_major" />
-      </label>
-
-      <label>How would you like to be involved?
-        <textarea name="message" rows="4" placeholder="Volunteering, committees, socials, etc."></textarea>
-      </label>
-
-      <button class="btn" type="submit">Submit</button>
-    </form>
-
-    <p class="note">Tip: Replace the <code>action</code> URL with your Formspree/Google Form link.</p>
-  </main>
-
-  <footer class="site-footer">
+  <!-- Join Form -->
+  <section class="section">
     <div class="container">
-      <p>© <span id="year"></span> Club Name</p>
+      <div class="section__head">
+        <h2>Formulario de Registro</h2>
+      </div>
+
+      <article class="card" style="max-width:600px;margin:auto;">
+        <div class="card__body">
+          <!-- TODO: Replace action URL with your own Formspree endpoint or Google Form embed -->
+          <form action="https://formspree.io/f/your-form-id" method="POST" class="grid" style="gap:1rem;">
+            <label>
+              Nombre completo
+              <input type="text" name="name" required style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;">
+            </label>
+
+            <label>
+              Email
+              <input type="email" name="email" required style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;">
+            </label>
+
+            <label>
+              Año / Carrera
+              <input type="text" name="year-major" style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;">
+            </label>
+
+            <label>
+              ¿Por qué quieres unirte?
+              <textarea name="reason" rows="4" style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;"></textarea>
+            </label>
+
+            <button type="submit" class="btn wide">Enviar</button>
+          </form>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Alternate: Embed Google Form -->
+  <!--
+  <section class="section">
+    <div class="container">
+      <iframe src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true"
+              width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+    </div>
+  </section>
+  -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footergrid">
+      <div>
+        <div class="brand brand--footer">MEXSA<span class="pill">SYR</span></div>
+        <p class="muted">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+      </div>
+      <nav class="footernav">
+        <a href="index.html">Inicio</a>
+        <a href="events.html">Eventos</a>
+        <a href="about.html">Nosotros</a>
+        <a href="join.html" aria-current="page">Únete</a>
+      </nav>
+      <div class="footercta">
+        <p class="muted">¿Preguntas? <a href="mailto:example@syr.edu">example@syr.edu</a></p>
+        <a class="btn" href="join.html">Hazte miembro</a>
+      </div>
+    </div>
+    <div class="container legal">
+      <p>© <span id="year"></span> MEXSA @ Syracuse • All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
+
