@@ -1,75 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MEXSA @ Syracuse — Home</title>
-  <meta name="description" content="Official website for the Mexican Student Association at Syracuse University." />
-  <!-- Favicon (optional): add /favicon.ico in root and uncomment -->
-  <!-- <link rel="icon" href="favicon.ico" /> -->
+  <title>MEXSA @ Syracuse — Inicio</title>
+  <meta name="description" content="Cultura, comunidad y orgullo mexicano en Syracuse University. Talleres, eventos, educación y solidaridad.">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html">MEXSA @ Syracuse</a>
+      <a class="brand" href="index.html">MEXSA<span class="pill">SYR</span></a>
       <nav id="nav" class="nav">
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="events.html">Events</a>
-        <a href="about.html">About</a>
-        <a class="cta" href="join.html">Join</a>
+        <a href="index.html" aria-current="page">Inicio</a>
+        <a href="events.html">Eventos</a>
+        <a href="about.html">Nosotros</a>
+        <a href="join.html" class="cta">Únete</a>
       </nav>
       <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <h1>Bienvenidos to <span class="accent">MEXSA</span></h1>
-        <p>We build comunidad on campus through cultura, food, workshops, and events—open to everyone.</p>
+  <!-- Hero -->
+  <section class="hero hero--stadium" style="background-image:
+    linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
+    url('assets/img/hero.jpg');">
+    <div class="hero__overlay">
+      <div class="container hero__content">
+        <p class="pill" style="margin-bottom:.6rem;">Bienvenidos</p>
+        <h1 class="hero__title">Mexican Student Association @ Syracuse</h1>
+        <p class="hero__subtitle">Comunidad, cultura y acción — talleres, educación y eventos para todxs.</p>
         <div class="actions">
-          <a class="btn" href="join.html">Become a member</a>
-          <a class="btn secondary" href="events.html">See upcoming events</a>
+          <a class="btn" href="join.html">Únete hoy</a>
+          <a class="btn secondary" href="events.html">Ver calendario</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="highlights">
-      <div class="container grid">
+  <!-- Quick highlights -->
+  <section class="strip">
+    <div class="container">
+      <div class="section__head"><h2>Noticias rápidas</h2></div>
+      <div class="newsgrid">
         <article class="card">
-          <h2>This Month</h2>
-          <p>Tortilla Workshop + GBM. No experience needed—come hang with us.</p>
-          <a class="inline" href="events.html">View details →</a>
+          <img class="card__img" src="assets/img/highlight-eboard.jpg" alt="E-Board Introductions (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Conoce a la Mesa Directiva</h3>
+            <p class="card__excerpt">Presentaciones del E-Board 24-25 — aprende quiénes somos y en qué trabajamos.</p>
+            <a class="inline" href="about.html#eboard">Ver equipo →</a>
+          </div>
         </article>
-
         <article class="card">
-          <h2>Get Involved</h2>
-          <p>Volunteer, join a committee, or help plan our signature events.</p>
-          <a class="inline" href="join.html">Sign up →</a>
+          <img class="card__img" src="assets/img/highlight-internships.jpg" alt="Internship spotlight (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Internship Spotlight</h3>
+            <p class="card__excerpt">Historias reales de prácticas y cómo aplicar. Comparte la tuya.</p>
+            <a class="inline" href="about.html#spotlights">Próximamente →</a>
+          </div>
         </article>
-
         <article class="card">
-          <h2>Stay Connected</h2>
-          <p>Follow us for updates, photos, and collabs.</p>
-          <ul class="socials">
-            <!-- Replace # with your links -->
-            <li><a href="#" aria-label="Instagram">Instagram</a></li>
-            <li><a href="#" aria-label="GroupMe">GroupMe</a></li>
-            <li><a href="mailto:example@syr.edu" aria-label="Email">Email</a></li>
-          </ul>
+          <img class="card__img" src="assets/img/highlight-puntitos.jpg" alt="MEXSA puntitos (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">MEXSA puntitos</h3>
+            <p class="card__excerpt">Datos, tips, y mini-posts culturales cada semana.</p>
+            <a class="inline" href="events.html#educacion">Explorar →</a>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="assets/img/highlight-advocacy.jpg" alt="Solidaridad y recursos (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Solidaridad & Recursos</h3>
+            <p class="card__excerpt">Conoce tus derechos, infórmate y actúa: Translate. Donate. Show up.</p>
+            <a class="inline" href="events.html#recursos">Ver recursos →</a>
+          </div>
         </article>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="site-footer">
+  <!-- Upcoming feature: Tortilla workshop + Watch party -->
+  <section class="section">
     <div class="container">
-      <p>© <span id="year"></span> MEXSA @ Syracuse • Built with ❤️ by the team</p>
+      <div class="section__head">
+        <h2>Próximos eventos destacados</h2>
+        <a class="link" href="events.html">Ver todo el calendario →</a>
+      </div>
+
+      <div class="matchgrid">
+        <!-- Left: big feature -->
+        <article class="matchcard">
+          <div class="matchcard__header">Hasta la Raíz — Taller de Tortillas</div>
+          <div class="matchcard__row">
+            <div class="matchcard__team">
+              <span class="crest">MX</span><span class="teamname">MEXSA</span>
+            </div>
+            <div class="matchcard__vs">x</div>
+            <div class="matchcard__team">
+              <span class="crest alt">SU</span><span class="teamname">Campus</span>
+            </div>
+          </div>
+          <div class="matchcard__meta">
+            <span class="badge">16 Sept • 7–8 PM</span><span class="dot"></span>
+            <span class="badge">HOL 107</span>
+          </div>
+          <p>Celebramos nuestra independencia, nuestras raíces y nuestra comida. Aprende a hacer tortillas caseras. Ingredientes incluidos. 🍚🌽</p>
+          <ul class="bullets">
+            <li>Facilitado con Brujas Aguas Frescas</li>
+            <li>Abierto a toda la comunidad</li>
+          </ul>
+          <a class="btn wide" href="events.html#tortillas">Más info</a>
+        </article>
+
+        <!-- Right: smaller stack -->
+        <div class="grid">
+          <article class="matchinfo">
+            <strong>México vs. Colombia — Watch Party</strong>
+            <p class="muted">11 Oct • 9:00 PM • Schine Atrium • Con SALSA</p>
+            <p>Ven a ver el partido con nosotrxs para celebrar Latine Heritage Month.</p>
+            <a class="inline" href="events.html#watchparty">Detalles →</a>
+          </article>
+
+          <article class="matchinfo">
+            <strong>Crochet Night Tradicional</strong>
+            <p class="muted">7 Oct • con CFTC</p>
+            <p>Aprende patrones y el significado cultural de la vestimenta mexicana.</p>
+            <a class="inline" href="events.html#crochet">Detalles →</a>
+          </article>
+
+          <article class="matchinfo">
+            <strong>Café con Leche — Inmigración</strong>
+            <p class="muted">9 Oct • Panel con Dr. McCormick</p>
+            <a class="inline" href="events.html#cafe">Detalles →</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education strip (Dia de Muertos + Know Your Rights + Alligator Alcatraz) -->
+  <section class="section section--dark" id="educacion">
+    <div class="container">
+      <div class="section__head"><h2>Educación & Comunidad</h2></div>
+      <div class="newsgrid">
+        <article class="card">
+          <img class="card__img" src="assets/img/dlm-quees.jpg" alt="Qué es Día de los Muertos (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">¿Qué es el Día de los Muertos?</h3>
+            <p class="card__excerpt">Tradición mexicana para honrar y celebrar la vida de quienes ya no están. Ofrendas, cempasúchil y memoria viva.</p>
+            <a class="inline" href="events.html#diadelosmuertos">Leer más →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card__img" src="assets/img/kyrights.jpg" alt="Know Your Rights (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Conoce tus derechos</h3>
+            <p class="card__excerpt">Recursos bilingües sobre contacto con ICE y la policía. Mantén la calma, no firmes nada sin abogadx.</p>
+            <a class="inline" href="events.html#kyrights">Descargar carteles →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card__img" src="assets/img/alligator-alcatraz.jpg" alt="Alligator Alcatraz (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Alligator Alcatraz</h3>
+            <p class="card__excerpt">Información sobre el centro de detención en los Everglades y formas de ayudar.</p>
+            <a class="inline" href="https://immigrantjustice.org/ways-to-help/" target="_blank" rel="noopener">Actúa ahora →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card__img" src="assets/img/reading-list.jpg" alt="Lecturas recomendadas (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Lecturas recomendadas</h3>
+            <p class="card__excerpt">Bibliografía sobre historia, arte y migración para empezar tu propio club de lectura.</p>
+            <a class="inline" href="events.html#lecturas">Ver lista →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join + QR / Socials -->
+  <section class="section">
+    <div class="container">
+      <div class="section__head"><h2>Únete a la comunidad</h2></div>
+      <div class="grid" style="grid-template-columns:2fr 1fr; gap:1rem;">
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Recibe noticias y eventos</h3>
+            <p class="card__excerpt">Inscríbete para enterarte de talleres, fiestas, colaboraciones y oportunidades.</p>
+            <a class="btn" href="join.html">Registrarme</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Síguenos</h3>
+            <p class="muted">Instagram, GroupMe, LinkedIn</p>
+            <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+              <img class="card__img" style="height:90px" src="assets/img/qr-instagram.png" alt="QR Instagram (placeholder)">
+              <img class="card__img" style="height:90px" src="assets/img/qr-groupme.png" alt="QR GroupMe (placeholder)">
+              <img class="card__img" style="height:90px" src="assets/img/qr-linkedin.png" alt="QR LinkedIn (placeholder)">
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footergrid">
+      <div>
+        <div class="brand brand--footer">MEXSA<span class="pill">SYR</span></div>
+        <p class="muted">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+      </div>
+      <nav class="footernav">
+        <a href="index.html" aria-current="page">Inicio</a>
+        <a href="events.html">Eventos</a>
+        <a href="about.html">Nosotros</a>
+        <a href="join.html">Únete</a>
+      </nav>
+      <div class="footercta">
+        <p class="muted">¿Preguntas? <a href="mailto:example@syr.edu">example@syr.edu</a></p>
+        <a class="btn" href="join.html">Hazte miembro</a>
+      </div>
+    </div>
+    <div class="container legal">
+      <p>© <span id="year"></span> MEXSA @ Syracuse • All rights reserved.</p>
     </div>
   </footer>
 
   <script src="main.js"></script>
 </body>
 </html>
+
 
