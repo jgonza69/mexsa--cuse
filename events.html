@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MEXSA @ Syracuse — Eventos</title>
-  <meta name="description" content="Calendario de próximos eventos de MEXSA @ Syracuse." />
+  <meta name="description" content="Calendario de próximos eventos, talleres y recursos educativos de MEXSA @ Syracuse." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,91 +23,191 @@
   </header>
 
   <!-- Hero -->
-  <section class="hero hero--stadium">
+  <section class="hero hero--stadium" style="background-image:
+    linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
+    url('assets/img/hero-events.jpg');">
     <div class="hero__overlay">
       <div class="container hero__content">
-        <h1 class="hero__title">Calendario de Eventos</h1>
-        <p class="hero__subtitle">Conoce nuestras próximas actividades, talleres y celebraciones.</p>
+        <h1 class="hero__title">Calendario & Recursos</h1>
+        <p class="hero__subtitle">Talleres, fiestas, educación y solidaridad en el campus.</p>
       </div>
     </div>
   </section>
 
-  <!-- Fixture-style event list -->
+  <!-- Upcoming key events (cards) -->
   <section class="section">
     <div class="container">
       <div class="section__head">
-        <h2>Próximos Eventos</h2>
+        <h2>Próximos eventos</h2>
       </div>
 
-      <div class="grid">
-        <!-- Event 1 -->
-        <article class="matchcard">
-          <div class="matchcard__header">Taller de Tortillas</div>
-          <div class="matchcard__row">
-            <div class="matchcard__team">
-              <span class="crest">MX</span>
-              <span class="teamname">MEXSA</span>
-            </div>
-            <div class="matchcard__vs">x</div>
-            <div class="matchcard__team">
-              <span class="crest alt">SU</span>
-              <span class="teamname">Campus</span>
-            </div>
+      <div class="newsgrid">
+        <!-- Tortillas -->
+        <article class="card" id="tortillas">
+          <img class="card__img" src="assets/img/tortillas.jpg" alt="Tortillas caseras — flyer (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Hasta la Raíz — Taller de Tortillas</h3>
+            <p class="muted">16 Sept · 7–8 PM · HOL 107</p>
+            <p class="card__excerpt">Celebramos independencia, raíces y comida. Aprende a hacer tortillas caseras con <em>Brujas Aguas Frescas</em>. Ingredientes incluidos.</p>
+            <a class="btn" href="join.html">Reserva tu lugar</a>
           </div>
-          <div class="matchcard__meta">
-            <span class="badge">16 Sept · 7:00 PM</span>
-            <span class="dot"></span>
-            <span class="badge">Centro Estudiantil Cocina</span>
-          </div>
-          <p>Aprende la técnica tradicional de hacer tortillas desde cero. Ingredientes incluidos 🍴</p>
-          <a class="btn wide" href="#">Ver más</a>
         </article>
 
-        <!-- Event 2 -->
-        <article class="matchcard">
-          <div class="matchcard__header">Reunión General (GBM)</div>
-          <div class="matchcard__row">
-            <div class="matchcard__team">
-              <span class="crest">MX</span>
-              <span class="teamname">MEXSA</span>
-            </div>
-            <div class="matchcard__vs">x</div>
-            <div class="matchcard__team">
-              <span class="crest alt">SU</span>
-              <span class="teamname">Campus</span>
-            </div>
+        <!-- Watch party -->
+        <article class="card" id="watchparty">
+          <img class="card__img" src="assets/img/watchparty.jpg" alt="Watch Party México vs Colombia — flyer (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Watch Party — México vs Colombia</h3>
+            <p class="muted">11 Oct · 9:00 PM · Schine Atrium · con SALSA</p>
+            <p class="card__excerpt">Acompáñanos para celebrar Latine Heritage Month. Dinámica, fotos y sorpresas.</p>
+            <a class="btn secondary" href="join.html">Confirma asistencia</a>
           </div>
-          <div class="matchcard__meta">
-            <span class="badge">23 Sept · 6:00 PM</span>
-            <span class="dot"></span>
-            <span class="badge">HBC 020</span>
-          </div>
-          <p>Conoce a otros miembros, recibe actualizaciones y súmate a un comité 🤝</p>
-          <a class="btn wide" href="#">Ver más</a>
         </article>
 
-        <!-- Event 3 -->
-        <article class="matchcard">
-          <div class="matchcard__header">Fiesta de Independencia</div>
-          <div class="matchcard__row">
-            <div class="matchcard__team">
-              <span class="crest">MX</span>
-              <span class="teamname">MEXSA</span>
-            </div>
-            <div class="matchcard__vs">x</div>
-            <div class="matchcard__team">
-              <span class="crest alt">SU</span>
-              <span class="teamname">Campus</span>
-            </div>
+        <!-- Crochet -->
+        <article class="card" id="crochet">
+          <img class="card__img" src="assets/img/crochet.jpg" alt="Traditional Mexican Crochet Night — flyer (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Traditional Mexican Crochet Night</h3>
+            <p class="muted">7 Oct · con CFTC</p>
+            <p class="card__excerpt">Aprende patrones tradicionales y su significado cultural. Material incluido hasta agotar existencias.</p>
           </div>
-          <div class="matchcard__meta">
-            <span class="badge">15 Sept · 8:00 PM</span>
-            <span class="dot"></span>
-            <span class="badge">Goldstein Auditorium</span>
-          </div>
-          <p>Una noche de música, baile y orgullo mexicano 🇲🇽 ¡No te lo pierdas!</p>
-          <a class="btn wide" href="#">Ver más</a>
         </article>
+
+        <!-- Café con Leche -->
+        <article class="card" id="cafe">
+          <img class="card__img" src="assets/img/cafe.jpg" alt="Café con Leche — Immigration Panel (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Café con Leche — Conversatorio sobre Inmigración</h3>
+            <p class="muted">9 Oct · con Dr. McCormick</p>
+            <p class="card__excerpt">Conversamos sobre historia, políticas actuales y recursos locales para la comunidad migrante.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Month grids / list style -->
+  <section class="strip">
+    <div class="container">
+      <div class="section__head">
+        <h2>Calendario del semestre</h2>
+      </div>
+
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap:1rem;">
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Septiembre</h3>
+            <ul class="bullets">
+              <li>15 — LHM Fair & Apertura (Student Center) · NALFO Night</li>
+              <li>16 — <strong>Taller de Tortillas</strong> (HOL 107, 7–8 PM)</li>
+              <li>18 — LHS GBM: Charlas y Horchata</li>
+              <li>20 — Torneo de Fútbol (voluntariado + ventas)</li>
+              <li>22 — Café con Leche (La Lucha) · 23 — Noche de Cumbia + Mixed Tapes</li>
+              <li>24 — ALPFA SU: charla con chef</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__body">
+            <h3 class="card__title">Octubre</h3>
+            <ul class="bullets">
+              <li>1 — Panel SALSA: Latinos in Syracuse</li>
+              <li>7 — <strong>Mexican Crochet Night</strong> (con CFTC)</li>
+              <li>8 — Música outside Schine · Dance Masterclass</li>
+              <li>9 — <strong>Café con Leche</strong> — Inmigración</li>
+              <li>11 — <strong>Watch Party: México vs Colombia</strong> (Schine Atrium, 9 PM)</li>
+              <li>15 — Panel de medios + Música outside Schine</li>
+              <li>16 — Café con Leche (HASA) · 22 — Música outside Schine</li>
+              <li>26 — Calentón Music</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education: Día de los Muertos -->
+  <section class="section section--dark" id="diadelosmuertos">
+    <div class="container">
+      <div class="section__head">
+        <h2>Día de los Muertos — Serie educativa</h2>
+      </div>
+      <div class="newsgrid">
+        <article class="card">
+          <img class="card__img" src="assets/img/dlm-quees.jpg" alt="¿Qué es Día de los Muertos? (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">¿Qué es?</h3>
+            <p class="card__excerpt">Tradición para honrar la vida de quienes ya partieron. Ofrendas, memoria y comunidad.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="assets/img/dlm-simbolos.jpg" alt="Símbolos (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Símbolos</h3>
+            <p class="card__excerpt">Cempasúchil, pan de muerto, calaveras de azúcar y velas.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="assets/img/dlm-origen.jpg" alt="Origen (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Origen</h3>
+            <p class="card__excerpt">Raíces mesoamericanas + tradiciones católicas; la mezcla que conocemos hoy.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__img" src="assets/img/dlm-tradiciones.jpg" alt="Tradiciones (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Tradiciones</h3>
+            <p class="card__excerpt">Ofrendas con fotos y comida, visitas al panteón y arte popular.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Know Your Rights + Alligator Alcatraz + Reading List -->
+  <section class="section" id="recursos">
+    <div class="container">
+      <div class="section__head">
+        <h2>Recursos & Solidaridad</h2>
+      </div>
+
+      <div class="grid" style="grid-template-columns:2fr 1fr; gap:1rem;">
+        <article class="card" id="kyrights">
+          <img class="card__img" src="assets/img/kyrights-thumb.jpg" alt="Know Your Rights posters (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Conoce tus derechos (bilingüe)</h3>
+            <p class="card__excerpt">Qué hacer si tienes contacto con ICE o la policía. Mantén la calma; no firmes nada sin representación legal.</p>
+            <!-- Replace with real files when you add them -->
+            <div class="grid" style="grid-template-columns:1fr 1fr;gap:.5rem;">
+              <a class="btn secondary" href="assets/docs/know-your-rights-en.pdf" download>Descargar (EN)</a>
+              <a class="btn secondary" href="assets/docs/know-your-rights-es.pdf" download>Descargar (ES)</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card__img" src="assets/img/alligator-alcatraz.jpg" alt="Alligator Alcatraz (placeholder)">
+          <div class="card__body">
+            <h3 class="card__title">Alligator Alcatraz</h3>
+            <p class="card__excerpt">Infórmate sobre el centro de detención en los Everglades y cómo ayudar.</p>
+            <a class="btn" target="_blank" rel="noopener" href="https://immigrantjustice.org/ways-to-help/">Translate · Donate · Show up</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="card" id="lecturas" style="margin-top:1rem;">
+        <div class="card__body">
+          <h3 class="card__title">Lecturas recomendadas</h3>
+          <p class="muted">Construye tu lista de lectura sobre historia, arte y migración.</p>
+          <ul class="bullets">
+            <li>Historia de México para principiantes (intro)</li>
+            <li>Arte mexicano contemporáneo (catálogo breve)</li>
+            <li>Migración y derechos humanos (lecturas base)</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -138,4 +238,5 @@
   <script src="main.js"></script>
 </body>
 </html>
+
 
