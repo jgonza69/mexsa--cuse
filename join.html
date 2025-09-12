@@ -23,62 +23,110 @@
   </header>
 
   <!-- Hero -->
-  <section class="hero hero--stadium">
+  <section class="hero hero--stadium" style="background-image:
+    linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
+    url('assets/img/hero-join.jpg');">
     <div class="hero__overlay">
       <div class="container hero__content">
-        <h1 class="hero__title">Hazte Miembro</h1>
-        <p class="hero__subtitle">Únete a MEXSA y recibe noticias, participa en eventos y forma parte de nuestra comunidad.</p>
+        <h1 class="hero__title">Únete a MEXSA</h1>
+        <p class="hero__subtitle">Recibe noticias, participa en eventos y forma parte de nuestra comunidad.</p>
       </div>
     </div>
   </section>
 
-  <!-- Join Form -->
+  <!-- Join -->
   <section class="section">
     <div class="container">
-      <div class="section__head">
-        <h2>Formulario de Registro</h2>
-      </div>
+      <div class="join-wrap">
+        <!-- Intro card -->
+        <article class="card join-cta">
+          <div class="card__body">
+            <h3 class="card__title">¡Bienvenid@!</h3>
+            <p class="muted">Completa el formulario y te contactamos con próximos eventos, comités y oportunidades.</p>
+          </div>
+        </article>
 
-      <article class="card" style="max-width:600px;margin:auto;">
-        <div class="card__body">
-          <!-- TODO: Replace action URL with your own Formspree endpoint or Google Form embed -->
-          <form action="https://formspree.io/f/your-form-id" method="POST" class="grid" style="gap:1rem;">
-            <label>
-              Nombre completo
-              <input type="text" name="name" required style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;">
-            </label>
+        <!-- Form card -->
+        <article class="card">
+          <div class="card__body">
+            <!-- TODO: replace action with your Formspree or Google Form endpoint -->
+            <form action="https://formspree.io/f/your-form-id" method="POST" class="form" novalidate>
+              <div class="row-2">
+                <label><span class="req">Nombre</span>
+                  <input class="input" type="text" name="name" autocomplete="name" required>
+                </label>
+                <label><span class="req">Email</span>
+                  <input class="input" type="email" name="email" autocomplete="email" required>
+                </label>
+              </div>
 
-            <label>
-              Email
-              <input type="email" name="email" required style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;">
-            </label>
+              <div class="row-2">
+                <label>Año
+                  <input class="input" type="text" name="year" placeholder="e.g., Sophomore">
+                </label>
+                <label>Carrera
+                  <input class="input" type="text" name="major" placeholder="e.g., Public Relations">
+                </label>
+              </div>
 
-            <label>
-              Año / Carrera
-              <input type="text" name="year-major" style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;">
-            </label>
+              <label>¿Cómo quieres participar?
+                <select class="select" name="interest">
+                  <option value="">Selecciona…</option>
+                  <option>Voluntariado</option>
+                  <option>Comités</option>
+                  <option>Redes / Contenido</option>
+                  <option>Eventos / Logística</option>
+                  <option>Fundraising / Merch</option>
+                </select>
+                <span class="help">Puedes elegir una y detallar abajo.</span>
+              </label>
 
-            <label>
-              ¿Por qué quieres unirte?
-              <textarea name="reason" rows="4" style="width:100%;padding:.6rem;border-radius:.4rem;border:1px solid #444;background:#0f1712;color:#fff;"></textarea>
-            </label>
+              <label>Cuéntanos más
+                <textarea class="textarea" name="message" rows="4" placeholder="Ideas, habilidades, disponibilidad…"></textarea>
+              </label>
 
-            <button type="submit" class="btn wide">Enviar</button>
-          </form>
+              <div class="checkrow">
+                <input class="checkbox" id="consent" type="checkbox" name="consent" required>
+                <label for="consent" class="help">Acepto ser contactad@ por MEXSA sobre eventos y oportunidades.</label>
+              </div>
+
+              <!-- Notices (shown by your form handler, optional placeholders) -->
+              <!-- <div class="notice success">¡Gracias! Te contactaremos pronto.</div>
+              <div class="notice error">Hubo un error. Intenta de nuevo.</div> -->
+
+              <div class="actions-row">
+                <button class="btn" type="submit">Enviar</button>
+                <a class="btn outline" href="events.html">Ver eventos</a>
+              </div>
+            </form>
+          </div>
+        </article>
+
+        <!-- QR / Socials -->
+        <div class="qrgrid">
+          <div class="qr">
+            <img src="assets/img/qr-instagram.png" alt="QR Instagram (placeholder)">
+            <div class="label">Instagram</div>
+          </div>
+          <div class="qr">
+            <img src="assets/img/qr-groupme.png" alt="QR GroupMe (placeholder)">
+            <div class="label">GroupMe</div>
+          </div>
+          <div class="qr">
+            <img src="assets/img/qr-linkedin.png" alt="QR LinkedIn (placeholder)">
+            <div class="label">LinkedIn</div>
+          </div>
         </div>
-      </article>
-    </div>
-  </section>
 
-  <!-- Alternate: Embed Google Form -->
-  <!--
-  <section class="section">
-    <div class="container">
-      <iframe src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true"
-              width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+        <!-- Optional: Google Form embed instead of Formspree -->
+        <!--
+        <div class="embed">
+          <iframe src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true" loading="lazy"></iframe>
+        </div>
+        -->
+      </div>
     </div>
   </section>
-  -->
 
   <!-- Footer -->
   <footer class="site-footer">
@@ -106,4 +154,5 @@
   <script src="main.js"></script>
 </body>
 </html>
+
 

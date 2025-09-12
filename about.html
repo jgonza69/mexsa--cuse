@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MEXSA @ Syracuse — Nosotros</title>
-  <meta name="description" content="Conoce la misión, liderazgo e historia de MEXSA @ Syracuse." />
+  <meta name="description" content="Conoce la misión de MEXSA @ Syracuse, nuestros valores y el equipo que lo hace posible." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -16,158 +16,177 @@
         <a href="index.html">Inicio</a>
         <a href="events.html">Eventos</a>
         <a href="about.html" aria-current="page">Nosotros</a>
-        <a class="cta" href="join.html">Únete</a>
+        <a href="join.html" class="cta">Únete</a>
       </nav>
       <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="hero hero--stadium">
+  <section class="hero hero--stadium" style="background-image:
+    linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
+    url('assets/img/hero-about.jpg');">
     <div class="hero__overlay">
       <div class="container hero__content">
-        <h1 class="hero__title">Quiénes Somos</h1>
-        <p class="hero__subtitle">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+        <h1 class="hero__title">Quiénes somos</h1>
+        <p class="hero__subtitle">MEXSA es comunidad, cultura y acción. Elevamos voces mexicanas y latinx en Syracuse.</p>
       </div>
     </div>
   </section>
 
-  <!-- Mission & Values -->
+  <!-- Mission -->
   <section class="section">
     <div class="container">
       <div class="section__head">
-        <h2>Misión y Valores</h2>
+        <h2>Nuestra misión</h2>
       </div>
-
-      <div class="newsgrid">
+      <div class="grid" style="grid-template-columns:2fr 1fr; gap:1rem;">
         <article class="card">
           <div class="card__body">
-            <h3 class="card__title">Nuestra misión</h3>
-            <p class="card__excerpt">
-              Fomentar comunidad para estudiantes mexicanos y aliados, compartir nuestras tradiciones y crear
-              espacios de apoyo, aprendizaje y liderazgo en el campus.
+            <p>
+              Promovemos el orgullo y la diversidad de México — de nuestras raíces indígenas a los
+              cruces contemporáneos— a través de <strong>talleres</strong>, <strong>eventos</strong>, <strong>arte</strong> y
+              <strong>acción comunitaria</strong>. Creamos espacios seguros para aprender, celebrar y organizarnos.
             </p>
+            <ul class="bullets">
+              <li>Programación cultural: música, cine, comida, arte.</li>
+              <li>Educación: historia, lectura, “Conoce tus derechos”.</li>
+              <li>Solidaridad: apoyar a comunidades migrantes en campus y fuera de él.</li>
+            </ul>
           </div>
         </article>
-
-        <article class="card">
+        <aside class="card">
+          <img class="card__img" src="assets/img/about-tile.jpg" alt="Comunidad MEXSA (placeholder)">
           <div class="card__body">
-            <h3 class="card__title">Cultura & Comunidad</h3>
-            <p class="card__excerpt">Eventos abiertos, respeto por nuestras raíces y colaboración con otros clubs.</p>
+            <p class="muted">¿Quieres participar? Únete a la lista y a nuestros grupos.</p>
+            <a class="btn" href="join.html">Hazte miembro</a>
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card__body">
-            <h3 class="card__title">Aprendizaje</h3>
-            <p class="card__excerpt">Talleres, charlas y actividades para conocer y compartir conocimientos.</p>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card__body">
-            <h3 class="card__title">Servicio</h3>
-            <p class="card__excerpt">Vinculación con la comunidad local y apoyo a nuevas generaciones.</p>
-          </div>
-        </article>
+        </aside>
       </div>
     </div>
   </section>
 
-  <!-- Leadership / Squad -->
+  <!-- Values -->
   <section class="strip">
     <div class="container">
-      <div class="section__head">
-        <h2>Liderazgo 2024–25</h2>
-      </div>
-
+      <div class="section__head"><h2>Valores</h2></div>
       <div class="newsgrid">
-        <!-- TODO: Reemplaza con fotos reales: <img class="card__img" src="assets/img/president.jpg" alt="Presidenta/o"> -->
         <article class="card">
           <div class="card__body">
-            <h3 class="card__title">Presidenta/o — <span class="muted">Nombre Apellido</span></h3>
-            <p class="card__excerpt">Especialidad/Año. Intereses: organización, cultura, outreach.</p>
-            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+            <h3 class="card__title">Comunidad</h3>
+            <p class="card__excerpt">Nos cuidamos y crecemos juntxs: colaboración entre RSOs y aliados en Syracuse.</p>
           </div>
         </article>
-
         <article class="card">
           <div class="card__body">
-            <h3 class="card__title">Vicepresidente/a — <span class="muted">Nombre Apellido</span></h3>
-            <p class="card__excerpt">Coordina comités y apoyo logístico de eventos.</p>
-            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+            <h3 class="card__title">Memoria</h3>
+            <p class="card__excerpt">Honramos historias: de Día de los Muertos a luchas contemporáneas.</p>
           </div>
         </article>
-
         <article class="card">
           <div class="card__body">
-            <h3 class="card__title">Tesorería — <span class="muted">Nombre Apellido</span></h3>
-            <p class="card__excerpt">Presupuesto, compras y reportes financieros.</p>
-            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+            <h3 class="card__title">Alegría</h3>
+            <p class="card__excerpt">Bailes, comida y fútbol — celebrar también es resistencia.</p>
           </div>
         </article>
-
         <article class="card">
           <div class="card__body">
-            <h3 class="card__title">Comunicación — <span class="muted">Nombre Apellido</span></h3>
-            <p class="card__excerpt">Redes sociales, foto/video y diseño.</p>
-            <a class="inline" href="mailto:example@syr.edu">Contactar →</a>
+            <h3 class="card__title">Solidaridad</h3>
+            <p class="card__excerpt">Defendemos la dignidad de personas migrantes. El silencio no es neutralidad.</p>
           </div>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- Short History / Timeline -->
-  <section class="section section--dark">
+  <!-- Solidarity / Statement -->
+  <section class="section section--dark" id="solidaridad">
     <div class="container">
       <div class="section__head">
-        <h2>Nuestra Historia</h2>
-        <a class="link" href="events.html">Ver eventos →</a>
+        <h2>Solidaridad</h2>
+      </div>
+      <article class="card">
+        <div class="card__body">
+          <p>
+            Rechazamos la militarización, deportaciones y perfiles raciales. Exigimos protección explícita
+            para comunidades indocumentadas en nuestra universidad. <strong>Translate. Donate. Show up.</strong>
+          </p>
+          <div class="grid" style="grid-template-columns:1fr 1fr;gap:.5rem;">
+            <a class="btn secondary" href="https://immigrantjustice.org/ways-to-help/" target="_blank" rel="noopener">Formas de ayudar</a>
+            <a class="btn secondary" href="events.html#kyrights">Conoce tus derechos</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- E-Board (scroll rail) -->
+  <section class="section" id="eboard">
+    <div class="container">
+      <div class="section__head">
+        <h2>Equipo 2024–2025</h2>
+        <p class="muted">Desliza para conocer a la mesa directiva.</p>
       </div>
 
-      <div class="mediagrid">
-        <div class="media card">
-          <div class="media__thumb skeleton" aria-hidden="true"></div>
-          <h4 class="media__title">2021 — Fundación</h4>
-          <p class="muted">MEXSA nace con el objetivo de crear comunidad y celebrar nuestra cultura.</p>
-        </div>
-        <div class="media card">
-          <div class="media__thumb skeleton" aria-hidden="true"></div>
-          <h4 class="media__title">2023 — Primer gran taller</h4>
-          <p class="muted">Taller de cocina con 100+ asistentes y colaboración con clubs aliados.</p>
-        </div>
-        <div class="media card">
-          <div class="media__thumb skeleton" aria-hidden="true"></div>
-          <h4 class="media__title">2025 — Expansión</h4>
-          <p class="muted">Nuevos comités y programas de mentoría con alumni.</p>
-        </div>
+      <div class="rail">
+        <!-- Repeat this card per person. Use your real images/links later. -->
+        <article class="person">
+          <img src="assets/img/eboard/president.jpg" alt="President (placeholder)">
+          <h3 class="person__name">Nombre Apellido</h3>
+          <p class="person__role">Presidenta/e</p>
+          <p class="person__blurb">Enfocad@ en comunidad y colaboración con RSOs aliados.</p>
+        </article>
+
+        <article class="person">
+          <img src="assets/img/eboard/vp.jpg" alt="VP (placeholder)">
+          <h3 class="person__name">Nombre Apellido</h3>
+          <p class="person__role">Vicepresidencia</p>
+          <p class="person__blurb">Coordina logística de eventos y relaciones institucionales.</p>
+        </article>
+
+        <article class="person">
+          <img src="assets/img/eboard/treasurer.jpg" alt="Treasurer (placeholder)">
+          <h3 class="person__name">Nombre Apellido</h3>
+          <p class="person__role">Tesorería</p>
+          <p class="person__blurb">Gestión de presupuestos y recaudación.</p>
+        </article>
+
+        <article class="person">
+          <img src="assets/img/eboard/comms.jpg" alt="Comms (placeholder)">
+          <h3 class="person__name">Nombre Apellido</h3>
+          <p class="person__role">Comunicaciones</p>
+          <p class="person__blurb">Diseño, redes y campañas educativas.</p>
+        </article>
+
+        <!-- Add more roles as needed -->
+      </div>
+
+      <div class="center" style="margin-top:1rem;">
+        <a class="btn" href="#spotlights">Internship Spotlight</a>
       </div>
     </div>
   </section>
 
-  <!-- Contact / Join -->
-  <section class="section">
+  <!-- Spotlights placeholder -->
+  <section class="strip" id="spotlights">
     <div class="container">
       <div class="section__head">
-        <h2>Contacto</h2>
+        <h2>Internship Spotlight</h2>
+        <p class="muted">Próximamente — comparte tu experiencia para inspirar a la comunidad.</p>
       </div>
-      <div class="grid" style="grid-template-columns: 2fr 1fr; gap:1rem;">
+      <div class="newsgrid">
         <article class="card">
+          <img class="card__img" src="assets/img/spotlight-1.jpg" alt="Spotlight (placeholder)">
           <div class="card__body">
-            <h3 class="card__title">Escríbenos</h3>
-            <p class="card__excerpt">¿Tienes preguntas, ideas o quieres colaborar?</p>
-            <!-- TODO: actualiza email y redes -->
-            <p class="muted">Email: <a class="inline" href="mailto:example@syr.edu">example@syr.edu</a></p>
-            <p class="muted">Instagram: <a class="inline" href="#" target="_blank" rel="noopener">instagram.com/mexsa</a></p>
+            <h3 class="card__title">Título del Spotlight</h3>
+            <p class="card__excerpt">Una breve descripción de la práctica o proyecto.</p>
           </div>
         </article>
-
         <article class="card">
+          <img class="card__img" src="assets/img/spotlight-2.jpg" alt="Spotlight (placeholder)">
           <div class="card__body">
-            <h3 class="card__title">Hazte miembro</h3>
-            <p class="card__excerpt">Únete y recibe actualizaciones de eventos y oportunidades.</p>
-            <a class="btn wide" href="join.html">Únete ahora</a>
+            <h3 class="card__title">Título del Spotlight</h3>
+            <p class="card__excerpt">Otra historia que pronto compartiremos.</p>
           </div>
         </article>
       </div>
@@ -200,4 +219,5 @@
   <script src="main.js"></script>
 </body>
 </html>
+
 
