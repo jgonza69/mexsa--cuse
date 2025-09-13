@@ -4,7 +4,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("menuBtn");
   const nav = document.getElementById("nav");
-  const navLinks = nav ? Array.from(nav.querySelectorAll("a[href^='#'], a[href^='/'], a[href^='./'], a[href^='../']")) : [];
+
+  // ✅ Include ALL header links (hash + page links) so menu closes on click
+  const navLinks = nav ? Array.from(nav.querySelectorAll("a")) : [];
 
   // Helper: set expanded state
   const setExpanded = (isOpen) => {
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setExpanded(next);
     });
 
-    // Close when clicking a nav link (nice on mobile)
+    // Close when clicking ANY nav link (important on mobile)
     navLinks.forEach((a) =>
       a.addEventListener("click", () => {
         if (nav.classList.contains("open")) setExpanded(false);
@@ -41,13 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Escape" && nav.classList.contains("open")) setExpanded(false);
     });
 
-    // Reset state on resize (e.g., when switching to desktop)
+    // ✅ Match CSS breakpoint (960px) to reset state on desktop
     let resizeTimer;
     window.addEventListener("resize", () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        // If your desktop breakpoint differs, change 768
-        if (window.innerWidth >= 768) setExpanded(false);
+        if (window.innerWidth >= 960) setExpanded(false);
       }, 120);
     });
   }
@@ -64,11 +65,25 @@ document.addEventListener("DOMContentLoaded", () => {
       target.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
       // update hash without jumping
       history.pushState(null, "", id);
+      // move focus for accessibility
+      target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
     });
   });
 
-  // Highlight active section link while scrolling
+  // ✅ Auto-highlight current page link in the header (multi-page sites)
+  if (nav) {
+    const here = location.pathname.split("/").pop() || "index.html";
+    const current = nav.querySelector(`a[href="${here}"]`);
+    if (current) {
+      current.setAttribute("aria-current", "page");
+      current.classList.add("active");
+    }
+  }
+
+  // Highlight active section link while scrolling (for same-page sections)
   const sectionIds = Array.from(document.querySelectorAll("section[id]")).map((s) => s.id);
+  // Only map hash links to sections on THIS page
   const idToLink = new Map(
     navLinks
       .filter((a) => a.hash && sectionIds.includes(a.hash.slice(1)))
@@ -99,4 +114,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
+
 

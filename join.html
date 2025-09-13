@@ -6,6 +6,7 @@
   <title>MEXSA @ Syracuse — Únete</title>
   <meta name="description" content="Hazte miembro de MEXSA @ Syracuse y recibe actualizaciones de eventos y oportunidades." />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="images/mexsa1.png" />
 </head>
 <body>
   <!-- Header -->
@@ -25,7 +26,7 @@
   <!-- Hero -->
   <section class="hero hero--stadium" style="background-image:
     linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
-    url('assets/img/hero-join.jpg');">
+    url('images/aquiestamos1.jpg');">
     <div class="hero__overlay">
       <div class="container hero__content">
         <h1 class="hero__title">Únete a MEXSA</h1>
@@ -49,8 +50,8 @@
         <!-- Form card -->
         <article class="card">
           <div class="card__body">
-            <!-- TODO: replace action with your Formspree or Google Form endpoint -->
-            <form action="https://formspree.io/f/your-form-id" method="POST" class="form" novalidate>
+            <!-- Replace the action with your real Formspree endpoint (e.g., https://formspree.io/f/abcd1234) -->
+            <form id="joinForm" action="https://formspree.io/f/your-form-id" method="POST" class="form" novalidate>
               <div class="row-2">
                 <label><span class="req">Nombre</span>
                   <input class="input" type="text" name="name" autocomplete="name" required>
@@ -85,14 +86,17 @@
                 <textarea class="textarea" name="message" rows="4" placeholder="Ideas, habilidades, disponibilidad…"></textarea>
               </label>
 
+              <!-- Honeypot anti-spam -->
+              <input type="text" name="_gotcha" style="display:none">
+
               <div class="checkrow">
                 <input class="checkbox" id="consent" type="checkbox" name="consent" required>
                 <label for="consent" class="help">Acepto ser contactad@ por MEXSA sobre eventos y oportunidades.</label>
               </div>
 
-              <!-- Notices (shown by your form handler, optional placeholders) -->
-              <!-- <div class="notice success">¡Gracias! Te contactaremos pronto.</div>
-              <div class="notice error">Hubo un error. Intenta de nuevo.</div> -->
+              <!-- Notices -->
+              <div id="noticeSuccess" class="notice success" style="display:none;">¡Gracias! Te contactaremos pronto.</div>
+              <div id="noticeError" class="notice error" style="display:none;">Hubo un error. Intenta de nuevo.</div>
 
               <div class="actions-row">
                 <button class="btn" type="submit">Enviar</button>
@@ -104,16 +108,17 @@
 
         <!-- QR / Socials -->
         <div class="qrgrid">
+          <!-- Drop your real QR images into /images with these names -->
           <div class="qr">
-            <img src="assets/img/qr-instagram.png" alt="QR Instagram (placeholder)">
+            <img src="images/qr-instagram.png" alt="QR Instagram">
             <div class="label">Instagram</div>
           </div>
           <div class="qr">
-            <img src="assets/img/qr-groupme.png" alt="QR GroupMe (placeholder)">
+            <img src="images/qr-groupme.png" alt="QR GroupMe">
             <div class="label">GroupMe</div>
           </div>
           <div class="qr">
-            <img src="assets/img/qr-linkedin.png" alt="QR LinkedIn (placeholder)">
+            <img src="images/qr-linkedin.png" alt="QR LinkedIn">
             <div class="label">LinkedIn</div>
           </div>
         </div>
@@ -121,7 +126,8 @@
         <!-- Optional: Google Form embed instead of Formspree -->
         <!--
         <div class="embed">
-          <iframe src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true" loading="lazy"></iframe>
+          <iframe src="https://docs.google.com/forms/d/e/your-google-form-id/viewform?embedded=true"
+                  loading="lazy" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
         </div>
         -->
       </div>
@@ -151,6 +157,52 @@
     </div>
   </footer>
 
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Lightweight client-side handler for Formspree (only if action is set)
+    const form = document.getElementById('joinForm');
+    const ok = document.getElementById('noticeSuccess');
+    const err = document.getElementById('noticeError');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic required checks
+      const name = form.elements.name.value.trim();
+      const email = form.elements.email.value.trim();
+      const consent = form.elements.consent.checked;
+      if (!name || !email || !consent) {
+        err.style.display = 'block';
+        err.textContent = 'Por favor completa nombre, email y el consentimiento.';
+        setTimeout(() => err.style.display = 'none', 4000);
+        return;
+      }
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+
+        if (res.ok) {
+          ok.style.display = 'block';
+          err.style.display = 'none';
+          form.reset();
+          setTimeout(() => ok.style.display = 'none', 5000);
+        } else {
+          throw new Error('Bad response');
+        }
+      } catch {
+        ok.style.display = 'none';
+        err.style.display = 'block';
+        err.textContent = 'Hubo un error. Intenta de nuevo.';
+        setTimeout(() => err.style.display = 'none', 5000);
+      }
+    });
+  </script>
   <script src="main.js"></script>
 </body>
 </html>
