@@ -204,92 +204,107 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ==== DATA ====
-    // E-Board: put your actual roles here when you have them (title field).
-    // Filenames MUST exist in /images. Keep extensions exact (.jpg/.png).
-    const eboard = [
-      { name: "Valeria Martinez Guiterrez",   title: "President",      file: "vale1.jpg" },
-      { name: "Vanessa Sanchez",    title: "Vice-president",         file: "vane1.png" },
-      { name: "Cesar Barrera",    title: "Co-Treaurer",   file: "cesar1.jpg" },
-      { name: "Gaby Ramirez",    title: "CO-Treasurer",   file: "gaby1.jpg" },
-      { name: "Carlos SIlva",  title: "Secretary",  file: "carlos1.jpg" },
-      { name: "Jesús Tiburcio Zane", title: "Outreach Chair",        file: "jesust1.png" }  // Jesús #2
-      { name: "Danna Ochoa Cardenas",   title: "Graphic Design Coordinator",          file: "danna2.png" },
-      { name: "Emilia Monroy-Hortos",     title: "Network Coordinator",    file: "emi2.png" },
-      { name: "María Ruelas",   title: "Marketing Director",       file: "maria1.jpg" },
-      { name: "Jesús Garcia", title: "Philanthropy Chair",      file: "jesusg1.png" }, // Jesús #1
+    // ==== DATA (single source of truth) ====
+    // Filenames MUST exist in /images exactly as written.
+    const members = [
+      { name: "Carlos Silva",                 file: "carlos1.jpg" },
+      { name: "Cesar Barrera",                file: "cesar1.jpg" },
+      { name: "Danna Ochoa Cardenas",         file: "danna2.png" },
+      { name: "Emilia Monroy Hortos",         file: "emi2.png" },
+      { name: "Gaby Ramirez",                 file: "gaby1.jpg" },
+      { name: "Jared Gonzalez",               file: "jared1.jpg" },
+      { name: "Jesús Garcia",                 file: "jesusg1.png" },   // Jesús #1
+      { name: "Jesús Tiburcio Zane",          file: "jesust1.png" },   // Jesús #2
+      { name: "María Ruelas",                 file: "maria1.jpg" },
+      { name: "Valeria Martinez Guiterrez",   file: "vale1.jpg" },
+      { name: "Vanessa Sanchez",              file: "vane1.png" }
     ];
 
-    // Full team grid: include everyone you have photos for.
-    const team = [
-      { name: "Carlos",  file: "carlos1.jpg" },
-      { name: "Carlos",  file: "carlos2.jpg" },
-      { name: "Cesar",   file: "cesar1.jpg" },
-      { name: "Cesar",   file: "cesar2.jpg" },
-      { name: "Danna",   file: "danna2.png" },
-      { name: "Danna",   file: "danna3.png" },
-      { name: "Emi",     file: "emi2.png" },
-      { name: "Emi",     file: "emi3.png" },
-      { name: "Gaby",    file: "gaby1.jpg" },
-      { name: "Gaby",    file: "gaby2.jpg" },
-      { name: "Gaby",    file: "gaby3.png" },
-      { name: "Jared",   file: "jared1.jpg" },
-      { name: "Jared",   file: "jared2.jpg" },
-      { name: "Jared",   file: "jared3.jpg" },
-      { name: "Jesús G", file: "jesusg1.png" },
-      { name: "Jesús G", file: "jesusg2.png" },
-      { name: "Jesús G", file: "jesusg3.png" },
-      { name: "Jesús T", file: "jesust1.png" },
-      { name: "Jesús T", file: "jesust2.png" },
-      { name: "Jesús T", file: "jesust3.png" },
-      { name: "María",   file: "maria1.jpg" },
-      { name: "María",   file: "maria2.jpg" },
-      { name: "Vale",    file: "vale1.jpg" },
-      { name: "Vane",    file: "vane1.png" },
-      { name: "Vane",    file: "vane2.png" },
-      { name: "Vane",    file: "vane3.jpg" }
-      // Añade más entradas si subes más fotos a /images
+    // Map E-Board roles to existing members by file (safest key)
+    const eboard = [
+      { file: "vale1.jpg",   title: "President" },
+      { file: "vane1.png",   title: "Vice President" },
+      { file: "cesar1.jpg",  title: "Co-Treasurer" },
+      { file: "gaby1.jpg",   title: "Co-Treasurer" },
+      { file: "carlos1.jpg", title: "Secretary" },
+      { file: "jesust1.png", title: "Outreach Chair" },
+      { file: "danna2.png",  title: "Graphic Design Coordinator" },
+      { file: "emi2.png",    title: "Network Coordinator" },
+      { file: "maria1.jpg",  title: "Marketing Director" },
+      { file: "jesusg1.png", title: "Philanthropy Chair" }
+    ].map(roleItem => {
+      const m = members.find(x => x.file === roleItem.file);
+      return { ...roleItem, name: m ? m.name : roleItem.file };
+    });
+
+    // If you have additional photos (e.g., carlos2.jpg), list them here:
+    const extraPhotos = [
+      // { name: "Carlos Silva", file: "carlos2.jpg" },
+      // { name: "Gaby Ramirez", file: "gaby2.jpg" },
+      // etc.
     ];
 
     // ==== RENDERERS ====
+    const fallbackImg = (el, altText = "Foto no disponible") => {
+      el.onerror = null;
+      el.src = "images/mexsa1.png"; // small logo/icon as fallback
+      el.alt = altText;
+    };
+
+    // E-Board rail
     const rail = document.getElementById('eboard-rail');
     if (rail) {
       eboard.forEach(({ name, title, file }) => {
         const card = document.createElement('article');
         card.className = 'person';
+
         const img = document.createElement('img');
         img.src = `images/${file}`;
         img.alt = `${name} — ${title}`;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.onerror = () => fallbackImg(img, `${name}`);
+
         const h3 = document.createElement('h3');
         h3.className = 'person__name';
         h3.textContent = name;
+
         const role = document.createElement('p');
         role.className = 'person__role';
         role.textContent = title;
+
         const blurb = document.createElement('p');
         blurb.className = 'person__blurb';
         blurb.textContent = '—';
-        card.appendChild(img);
-        card.appendChild(h3);
-        card.appendChild(role);
-        card.appendChild(blurb);
+
+        card.append(img, h3, role, blurb);
         rail.appendChild(card);
       });
     }
 
+    // Full team grid (all members + any extra photos you add)
     const grid = document.getElementById('team-grid');
     if (grid) {
-      team.forEach(({ name, file }) => {
+      const teamList = [
+        ...members.map(m => ({ name: m.name, file: m.file })),
+        ...extraPhotos
+      ];
+
+      teamList.forEach(({ name, file }) => {
         const fig = document.createElement('figure');
         fig.className = 'member-card';
+
         const img = document.createElement('img');
         img.loading = 'lazy';
+        img.decoding = 'async';
         img.src = `images/${file}`;
         img.alt = name;
+        img.onerror = () => fallbackImg(img, name);
+
         const cap = document.createElement('figcaption');
         cap.textContent = name;
-        fig.appendChild(img);
-        fig.appendChild(cap);
+
+        fig.append(img, cap);
         grid.appendChild(fig);
       });
     }
