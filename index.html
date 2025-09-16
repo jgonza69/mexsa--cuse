@@ -210,11 +210,30 @@
           <div class="card__body">
             <h3 class="card__title">Síguenos</h3>
             <p class="muted">Instagram, GroupMe, LinkedIn</p>
-            <!-- Reemplaza estas imágenes por tus QRs cuando los tengas en /images -->
             <div class="grid" style="grid-template-columns:repeat(3,1fr);">
-              <img class="card__img" style="height:90px" src="images/iglogo.jpeg" alt="Instagram QR">
-              <img class="card__img" style="height:90px" src="images/groupme.jpeg" alt="GroupMe QR">
-              <img class="card__img" style="height:90px" src="images/linkedln.png" alt="LinkedIn QR">
+              <a class="social-link"
+                 href="https://www.instagram.com/mexsa.cuse/"
+                 target="_blank" rel="noopener"
+                 aria-label="Instagram de MEXSA">
+                <img class="card__img" style="height:90px"
+                     src="images/iglogo.jpeg" alt="Instagram" loading="lazy" decoding="async">
+              </a>
+
+              <a class="social-link"
+                 href="https://groupme.com/join_group/108355187/lu7G3Xc1"
+                 target="_blank" rel="noopener"
+                 aria-label="Únete al GroupMe de MEXSA">
+                <img class="card__img" style="height:90px"
+                     src="images/groupme.jpeg" alt="GroupMe" loading="lazy" decoding="async">
+              </a>
+
+              <a class="social-link"
+                 href="https://www.linkedin.com/in/mexsasu"
+                 target="_blank" rel="noopener"
+                 aria-label="LinkedIn de MEXSA SU">
+                <img class="card__img" style="height:90px"
+                     src="images/linkedln.png" alt="LinkedIn" loading="lazy" decoding="async">
+              </a>
             </div>
           </div>
         </article>
@@ -256,7 +275,7 @@
     const members = [
       { name: "Carlos Silva", file: "carlos1.jpg" },
       { name: "Cesar Barrera",  file: "cesar1.jpg" },
-      { name: "Danna Ochoa Cardenas ",  file: "danna2.png" },
+      { name: "Danna Ochoa Cardenas",  file: "danna2.png" },
       { name: "Emilia Monroy Hortos",    file: "emi2.png" },
       { name: "Gaby Ramirez",   file: "gaby1.jpg" },
       { name: "Jared Gonzalez",  file: "jared1.jpg" },
@@ -302,5 +321,6 @@
   </script>
 </body>
 </html>
+
 
 
