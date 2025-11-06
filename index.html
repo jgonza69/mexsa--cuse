@@ -103,7 +103,7 @@
     </div>
   </section>
 
-  <!-- Eventos pasados (los 3 más recientes) -->
+  <!-- Eventos pasados (los 3 más recientes, con rotación de páginas) -->
   <section class="strip">
     <div class="container">
       <div class="section__head">
@@ -115,7 +115,8 @@
         data-events-feed
         data-mode="past"
         data-limit="3"
-        data-image-rotate-ms="5000">
+        data-image-rotate-ms="5000"
+        data-rotate-pages-ms="9000">
       </div>
     </div>
   </section>
@@ -408,20 +409,18 @@
       return grid;
     };
 
-    // Page-rotate helper for upcoming feed (rotates groups of N)
-    const mountUpcomingWithPaging = (mount, items) => {
-      const limit = parseInt(mount.getAttribute('data-limit') || '3', 10);
+    // Generic pager (works for upcoming or past)
+    const mountWithPaging = (mount, items) => {
+      const limit  = parseInt(mount.getAttribute('data-limit') || '3', 10);
       const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
       const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
 
-      // If no paging requested or <= limit, render once
       if (!pageMs || items.length <= limit) {
         mount.innerHTML = '';
         mount.appendChild(renderGrid(items.slice(0, limit), imageMs));
         return;
       }
 
-      // Build pages of size = limit
       const pages = [];
       for (let i = 0; i < items.length; i += limit) pages.push(items.slice(i, i + limit));
 
@@ -437,13 +436,11 @@
     };
 
     const renderInto = (mount, items) => {
-      const mode = (mount.getAttribute('data-mode') || 'upcoming').toLowerCase();
-      const limit = parseInt(mount.getAttribute('data-limit') || '0', 10);
+      const limit  = parseInt(mount.getAttribute('data-limit') || '0', 10);
       const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
+      const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
 
-      if (mode === 'upcoming' && mount.hasAttribute('data-rotate-pages-ms')) {
-        return mountUpcomingWithPaging(mount, items);
-      }
+      if (pageMs) return mountWithPaging(mount, items);
 
       const list = (!limit || items.length <= limit) ? items : items.slice(0, limit);
       mount.innerHTML = '';
@@ -470,6 +467,7 @@
   <!-- === /Events feed === -->
 </body>
 </html>
+
 
 
 
