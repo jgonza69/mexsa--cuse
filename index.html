@@ -83,7 +83,7 @@
     </div>
   </section>
 
-  <!-- Próximos eventos (dynamic from Google Sheet) -->
+  <!-- Próximos eventos (dinámico desde Google Sheet) -->
   <section class="section">
     <div class="container">
       <div class="section__head">
@@ -91,12 +91,32 @@
         <a class="link" href="events.html">Ver todo el calendario →</a>
       </div>
 
-      <!-- Dynamic feed: shows 3 at a time, rotates pages if there are more, per-event images rotate -->
-      <div data-events-feed
-           data-limit="3"
-           data-rotate-pages-ms="9000"
-           data-image-rotate-ms="5000"></div>
+      <!-- Feed dinámico: muestra 3 a la vez y rota páginas si hay más -->
+      <div
+        data-events-feed
+        data-mode="upcoming"
+        data-limit="3"
+        data-image-rotate-ms="5000"
+        data-rotate-pages-ms="9000">
+      </div>
       <!-- END dynamic feed -->
+    </div>
+  </section>
+
+  <!-- Eventos pasados (los 3 más recientes) -->
+  <section class="strip">
+    <div class="container">
+      <div class="section__head">
+        <h2>Eventos pasados</h2>
+        <a class="link" href="events.html">Ver más →</a>
+      </div>
+
+      <div
+        data-events-feed
+        data-mode="past"
+        data-limit="3"
+        data-image-rotate-ms="5000">
+      </div>
     </div>
   </section>
 
@@ -263,37 +283,34 @@
 
   <!-- === Events feed (Google Sheet) === -->
   <script>
-    // ############## CONFIG ##############
-    // Your published Google Apps Script Web App endpoint:
+    // Your published Apps Script Web App endpoint:
     window.EVENTS_API_URL = 'https://script.google.com/macros/s/AKfycbwwH-QNELsaWFbyMexOt4abYJIXTtCd6EyerkzpJoMcYFGjOhxgLkwTPULZLwAZMINn/exec';
-    // ############ END CONFIG ############
   </script>
   <script>
-  (() => {
+  (function () {
     const API = window.EVENTS_API_URL;
     const mounts = Array.from(document.querySelectorAll('[data-events-feed]'));
     if (!API || !mounts.length) return;
 
-    // helper
-    const el = (t, a={}, kids=[]) => {
-      const n = document.createElement(t);
-      for (const [k,v] of Object.entries(a)) {
+    const el = (tag, attrs = {}, kids = []) => {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
         if (k === 'class') n.className = v;
         else if (k === 'html') n.innerHTML = v;
         else n.setAttribute(k, v);
-      }
+      });
       kids.forEach(k => n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k));
       return n;
     };
 
-    // image rotator (with cache-bust + fallback)
-    const imageRotator = (urls, rotateMs=5000) => {
-      const wrap = el('div', { class: 'events-card__media' });
+    // Single-image view with auto-rotate if multiple
+    const imageRotator = (urls, rotateMs = 5000) => {
+      const wrap = el('div', { class: 'events-rotator' });
+      Object.assign(wrap.style, { position: 'relative' });
+
       const img = el('img', { alt: '', loading: 'lazy' });
-      Object.assign(img.style, {
-        width:'100%', height:'160px', objectFit:'cover',
-        borderRadius:'12px', background:'#0f1a12'
-      });
+      Object.assign(img.style, { width: '100%', borderRadius: '12px', display: 'block', height:'160px', objectFit:'cover', background:'#0f1a12' });
+      wrap.appendChild(img);
 
       const setSrc = (u) => {
         const clean = String(u||'').trim();
@@ -302,52 +319,59 @@
         img.src = busted || 'images/mexsa1.png';
       };
 
-      let i = 0;
-      if (!urls || !urls.length) urls = ['images/mexsa1.png'];
-      setSrc(urls[i]);
-      wrap.appendChild(img);
+      let idx = urls && urls.length ? Math.floor(Math.random() * urls.length) : 0;
+      const list = (urls && urls.length) ? urls : ['images/mexsa1.png'];
 
-      if (urls.length > 1 && rotateMs > 0) {
-        setInterval(() => { i = (i + 1) % urls.length; setSrc(urls[i]); }, rotateMs);
-      }
+      const show = (i) => { idx = (i + list.length) % list.length; setSrc(list[idx]); };
+
+      let timer = null;
+      const start = () => {
+        if (timer || list.length < 2 || rotateMs <= 0) return;
+        timer = setInterval(() => show(idx + 1), rotateMs);
+      };
+      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+
+      // pause/resume + click advance
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+      wrap.addEventListener('click', () => { if (list.length > 1) show(idx + 1); });
+      wrap.addEventListener('mouseenter', stop);
+      wrap.addEventListener('mouseleave', start);
+
+      show(idx);
+      start();
       return wrap;
     };
 
-    // event card
-    const card = (e, imageMs) => {
-      const media = imageRotator(e.images, imageMs);
+    const renderCard = (item, rotateMs) => {
+      const card = el('article', { class: 'card events-card' });
+      const media = imageRotator(item.images, rotateMs);
       const body  = el('div', { class:'card__body' }, [
-        el('h3', { class:'card__title' }, [e.title || 'Evento']),
-        el('p',  { class:'muted' },      [e.whenText || e.when || '']),
-        el('p',  { class:'card__excerpt'},[e.description || '']),
-        e.link ? el('a', { class:'btn secondary', href: e.link, target:'_blank', rel:'noopener' }, ['Más info']) : el('span')
+        el('h3', { class:'card__title' }, [item.title || 'Evento']),
+        el('p',  { class:'muted' },      [item.whenText || item.when || '']),
+        item.description ? el('p',  { class:'card__excerpt'}, [item.description]) : el('span'),
+        item.link ? el('a', { class:'btn secondary', href:item.link, target:'_blank', rel:'noopener' }, ['Más info']) : el('span')
       ]);
-      const wrap = el('article', { class:'card events-card' }, [media, body]);
-      return wrap;
+      card.append(media, body);
+      return card;
     };
 
-    // fetch + normalize + filter + sort
-    const fetchEvents = async () => {
-      const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache:'no-store' });
-      const data = await res.json();
-
-      const rows = (Array.isArray(data) ? data : []).map(x => {
-        const images = String(x.images || x.image || '')
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean);
+    const normalize = (data) => {
+      return (Array.isArray(data) ? data : []).map(x => {
+        const images = Array.isArray(x.images)
+          ? x.images
+          : String(x.images || x.image || '')
+              .split(',')
+              .map(s => s.trim())
+              .filter(Boolean);
 
         const status = String(x.status || 'publish').toLowerCase();
-
         const rawDate = String(x.date || x.when || '').trim();
         const dt = rawDate ? new Date(rawDate) : null;
-
-        const whenText = rawDate || '';
 
         return {
           title: x.title || x.name || '',
           when: rawDate,
-          whenText,
+          whenText: rawDate || '',
           description: x.description || x.desc || '',
           link: x.link || x.url || '',
           images,
@@ -355,57 +379,89 @@
           _dt: isFinite(dt?.getTime?.()) ? dt : null
         };
       });
+    };
 
-      // only published + auto-hide past dates
+    const filterSort = (rows, mode) => {
       const today = new Date(); today.setHours(0,0,0,0);
-      const visible = rows
-        .filter(r => !['hide','hidden','draft','no'].includes(r.status))
-        .filter(r => !r._dt || r._dt >= today);
+      const visible = rows.filter(r => !['hide','hidden','draft','no'].includes(r.status));
 
-      // soonest first (null dates last)
-      visible.sort((a,b) => {
-        const A = a._dt ? a._dt.getTime() : Infinity;
-        const B = b._dt ? b._dt.getTime() : Infinity;
-        return A - B;
-      });
-
+      if (mode === 'past') {
+        const past = visible.filter(r => r._dt && r._dt < today);
+        past.sort((a,b) => b._dt - a._dt);          // newest past first
+        return past;
+      }
+      if (mode === 'upcoming') {
+        const future = visible.filter(r => !r._dt || r._dt >= today);
+        future.sort((a,b) => {
+          const A = a._dt ? a._dt.getTime() : Infinity;
+          const B = b._dt ? b._dt.getTime() : Infinity;
+          return A - B;                              // soonest first, undated last
+        });
+        return future;
+      }
       return visible;
     };
 
-    const renderInto = (mount, items) => {
-      const limitAttr = Number(mount.getAttribute('data-limit') || '0'); // 0 = no limit
-      const imageMs   = Number(mount.getAttribute('data-image-rotate-ms') || '5000');
-      const pageMs    = Number(mount.getAttribute('data-rotate-pages-ms') || '0'); // 0 = no rotation
+    const renderGrid = (items, rotateMsPerImage) => {
       const grid = el('div', { class:'newsgrid' });
-      mount.innerHTML = '';
-      mount.appendChild(grid);
+      items.forEach(x => grid.appendChild(renderCard(x, rotateMsPerImage)));
+      return grid;
+    };
 
-      if (!limitAttr || items.length <= limitAttr || pageMs <= 0) {
-        items.forEach(ev => grid.appendChild(card(ev, imageMs)));
+    // Page-rotate helper for upcoming feed (rotates groups of N)
+    const mountUpcomingWithPaging = (mount, items) => {
+      const limit = parseInt(mount.getAttribute('data-limit') || '3', 10);
+      const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
+      const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
+
+      // If no paging requested or <= limit, render once
+      if (!pageMs || items.length <= limit) {
+        mount.innerHTML = '';
+        mount.appendChild(renderGrid(items.slice(0, limit), imageMs));
         return;
       }
 
-      // paginate into pages of `limitAttr` and auto-rotate pages
+      // Build pages of size = limit
       const pages = [];
-      for (let i=0; i<items.length; i+=limitAttr) pages.push(items.slice(i, i+limitAttr));
-      let p = 0;
+      for (let i = 0; i < items.length; i += limit) pages.push(items.slice(i, i + limit));
 
-      const showPage = (idx) => {
+      let p = 0;
+      const show = (idx) => {
         p = (idx + pages.length) % pages.length;
-        grid.innerHTML = '';
-        pages[p].forEach(ev => grid.appendChild(card(ev, imageMs)));
+        mount.innerHTML = '';
+        mount.appendChild(renderGrid(pages[p], imageMs));
       };
 
-      showPage(0);
-      setInterval(() => showPage(p + 1), pageMs);
+      show(0);
+      setInterval(() => show(p + 1), pageMs);
     };
 
-    // boot
+    const renderInto = (mount, items) => {
+      const mode = (mount.getAttribute('data-mode') || 'upcoming').toLowerCase();
+      const limit = parseInt(mount.getAttribute('data-limit') || '0', 10);
+      const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
+
+      if (mode === 'upcoming' && mount.hasAttribute('data-rotate-pages-ms')) {
+        return mountUpcomingWithPaging(mount, items);
+      }
+
+      const list = (!limit || items.length <= limit) ? items : items.slice(0, limit);
+      mount.innerHTML = '';
+      mount.appendChild(renderGrid(list, imageMs));
+    };
+
     (async () => {
       try {
-        const events = await fetchEvents();
-        mounts.forEach(m => renderInto(m, events));
-      } catch(e) {
+        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
+        const raw = await res.json();
+        const rows = normalize(raw);
+
+        mounts.forEach(m => {
+          const mode = (m.getAttribute('data-mode') || 'upcoming').toLowerCase();
+          const list = filterSort(rows, mode);
+          renderInto(m, list);
+        });
+      } catch (e) {
         console.error('Events feed error:', e);
       }
     })();
@@ -414,6 +470,7 @@
   <!-- === /Events feed === -->
 </body>
 </html>
+
 
 
 

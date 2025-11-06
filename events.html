@@ -42,15 +42,35 @@
         <h2>Próximos eventos</h2>
       </div>
 
-      <!-- Dynamic feed: show ALL upcoming published events, sorted by soonest; per-event images rotate -->
-      <div data-events-feed
-           data-limit="0"
-           data-image-rotate-ms="5000"></div>
+      <!-- Dynamic feed: ALL upcoming published events, sorted by soonest -->
+      <div
+        data-events-feed
+        data-mode="upcoming"
+        data-limit="0"
+        data-image-rotate-ms="5000">
+      </div>
       <!-- END dynamic feed -->
     </div>
   </section>
 
-  <!-- Month grids / list style -->
+  <!-- Eventos pasados (dynamic from Google Sheet) -->
+  <section class="strip">
+    <div class="container">
+      <div class="section__head">
+        <h2>Eventos pasados</h2>
+      </div>
+
+      <!-- Dynamic feed: past events, newest first. Limit optional (0 = sin límite) -->
+      <div
+        data-events-feed
+        data-mode="past"
+        data-limit="0"
+        data-image-rotate-ms="5000">
+      </div>
+    </div>
+  </section>
+
+  <!-- Month grids / list style (static reference) -->
   <section class="strip">
     <div class="container">
       <div class="section__head">
@@ -267,28 +287,26 @@
       return wrap;
     };
 
-    // fetch + normalize + filter + sort
-    const fetchEvents = async () => {
-      const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache:'no-store' });
-      const data = await res.json();
-
-      const rows = (Array.isArray(data) ? data : []).map(x => {
-        const images = String(x.images || x.image || '')
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean);
+    // normalize rows coming from the API
+    const normalize = (data) => {
+      return (Array.isArray(data) ? data : []).map(x => {
+        // images may arrive as array or comma-separated string
+        const images = Array.isArray(x.images)
+          ? x.images
+          : String(x.images || x.image || '')
+              .split(',')
+              .map(s => s.trim())
+              .filter(Boolean);
 
         const status = String(x.status || 'publish').toLowerCase();
 
         const rawDate = String(x.date || x.when || '').trim();
         const dt = rawDate ? new Date(rawDate) : null;
 
-        const whenText = rawDate || '';
-
         return {
           title: x.title || x.name || '',
           when: rawDate,
-          whenText,
+          whenText: rawDate || '',
           description: x.description || x.desc || '',
           link: x.link || x.url || '',
           images,
@@ -296,25 +314,43 @@
           _dt: isFinite(dt?.getTime?.()) ? dt : null
         };
       });
+    };
 
-      // only published + auto-hide past dates
+    // filter + sort based on mode
+    const filterSort = (rows, mode) => {
       const today = new Date(); today.setHours(0,0,0,0);
-      const visible = rows
-        .filter(r => !['hide','hidden','draft','no'].includes(r.status))
-        .filter(r => !r._dt || r._dt >= today);
+      const visible = rows.filter(r => !['hide','hidden','draft','no'].includes(r.status));
 
-      // soonest first (null dates last)
-      visible.sort((a,b) => {
+      if (mode === 'past') {
+        const past = visible.filter(r => r._dt && r._dt < today);
+        // newest past first
+        past.sort((a,b) => b._dt - a._dt);
+        return past;
+      }
+
+      if (mode === 'upcoming') {
+        const future = visible.filter(r => !r._dt || r._dt >= today);
+        // soonest first; undated last
+        future.sort((a,b) => {
+          const A = a._dt ? a._dt.getTime() : Infinity;
+          const B = b._dt ? b._dt.getTime() : Infinity;
+          return A - B;
+        });
+        return future;
+      }
+
+      // mode === 'all' (not used here, but supported)
+      const all = [...visible];
+      all.sort((a,b) => {
         const A = a._dt ? a._dt.getTime() : Infinity;
         const B = b._dt ? b._dt.getTime() : Infinity;
         return A - B;
       });
-
-      return visible;
+      return all;
     };
 
     const renderInto = (mount, items) => {
-      const limitAttr = Number(mount.getAttribute('data-limit') || '0'); // 0 = no limit (show all)
+      const limitAttr = Number(mount.getAttribute('data-limit') || '0'); // 0 = sin límite
       const imageMs   = Number(mount.getAttribute('data-image-rotate-ms') || '5000');
       const grid = el('div', { class:'newsgrid' });
       mount.innerHTML = '';
@@ -327,8 +363,16 @@
     // boot
     (async () => {
       try {
-        const events = await fetchEvents();
-        mounts.forEach(m => renderInto(m, events));
+        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache:'no-store' });
+        const raw = await res.json();
+        const rows = normalize(raw);
+
+        // render each mount according to its data-mode
+        mounts.forEach(m => {
+          const mode = (m.getAttribute('data-mode') || 'upcoming').toLowerCase();
+          const list = filterSort(rows, mode);
+          renderInto(m, list);
+        });
       } catch(e) {
         console.error('Events feed error:', e);
       }
@@ -338,6 +382,7 @@
   <!-- === /Events feed === -->
 </body>
 </html>
+
 
 
 
