@@ -83,7 +83,7 @@
     </div>
   </section>
 
-  <!-- Próximos eventos -->
+  <!-- Próximos eventos (dynamic from Google Sheet) -->
   <section class="section">
     <div class="container">
       <div class="section__head">
@@ -91,54 +91,9 @@
         <a class="link" href="events.html">Ver todo el calendario →</a>
       </div>
 
-      <div class="matchgrid">
-        <!-- Left: big feature -->
-        <article class="matchcard">
-          <div class="matchcard__header">Hasta la Raíz — Taller de Tortillas</div>
-          <div class="matchcard__row">
-            <div class="matchcard__team">
-              <span class="crest">MX</span><span class="teamname">MEXSA</span>
-            </div>
-            <div class="matchcard__vs">x</div>
-            <div class="matchcard__team">
-              <span class="crest alt">SU</span><span class="teamname">Campus</span>
-            </div>
-          </div>
-          <div class="matchcard__meta">
-            <span class="badge">16 Sept • 7–8 PM</span><span class="dot"></span>
-            <span class="badge">HOL 107</span>
-          </div>
-          <p>Celebramos nuestra independencia, nuestras raíces y nuestra comida. Aprende a hacer tortillas caseras. Ingredientes incluidos. 🌽</p>
-          <ul class="bullets">
-            <li>Facilitado con Brujas Aguas Frescas</li>
-            <li>Abierto a toda la comunidad</li>
-          </ul>
-          <a class="btn wide" href="events.html#tortillas">Más info</a>
-        </article>
-
-        <!-- Right: smaller stack -->
-        <div class="grid">
-          <article class="matchinfo">
-            <strong>México vs. Colombia — Watch Party</strong>
-            <p class="muted">11 Oct • 9:00 PM • Schine Atrium • Con SALSA</p>
-            <p>Ven a ver el partido con nosotrxs para celebrar Latine Heritage Month.</p>
-            <a class="inline" href="events.html#watchparty">Detalles →</a>
-          </article>
-
-          <article class="matchinfo">
-            <strong>Crochet Night Tradicional</strong>
-            <p class="muted">7 Oct • con CFTC</p>
-            <p>Aprende patrones y el significado cultural de la vestimenta mexicana.</p>
-            <a class="inline" href="events.html#crochet">Detalles →</a>
-          </article>
-
-          <article class="matchinfo">
-            <strong>Café con Leche — Inmigración</strong>
-            <p class="muted">9 Oct • Panel con Dr. McCormick</p>
-            <a class="inline" href="events.html#cafe">Detalles →</a>
-          </article>
-        </div>
-      </div>
+      <!-- REPLACED old hard-coded cards with the dynamic feed container -->
+      <div data-events-feed data-limit="4" data-rotate-ms="5000"></div>
+      <!-- END dynamic feed container -->
     </div>
   </section>
 
@@ -271,7 +226,6 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // One card per member. Uses the FIRST photo for each person.
-    // If you want different photos, swap the filename on that entry.
     const members = [
       { name: "Carlos Silva", file: "carlos1.jpg" },
       { name: "Cesar Barrera",  file: "cesar1.jpg" },
@@ -279,27 +233,11 @@
       { name: "Emilia Monroy Hortos",    file: "emi2.png" },
       { name: "Gaby Ramirez",   file: "gaby1.jpg" },
       { name: "Jared Gonzalez",  file: "jared1.jpg" },
-      { name: "Jesús Garcia", file: "jesusg1.png" },   // <-- Jesús #1
-      { name: "Jesús Tiburcio Zane", file: "jesust1.png" },   // <-- Jesús #2
+      { name: "Jesús Garcia", file: "jesusg1.png" },
+      { name: "Jesús Tiburcio Zane", file: "jesust1.png" },
       { name: "María Ruelas",  file: "maria1.jpg" },
       { name: "Valeria Martinez Guiterrez",   file: "vale1.jpg" },
       { name: "Vanessa Sanchez",   file: "vane1.png" },
-      // Extras you have available (uncomment to add alternates or more)
-      // { name: "Carlos", file: "carlos2.jpg" },
-      // { name: "Cesar", file: "cesar2.jpg" },
-      // { name: "Danna", file: "danna3.png" },
-      // { name: "Emi", file: "emi3.png" },
-      // { name: "Gaby", file: "gaby2.jpg" },
-      // { name: "Gaby", file: "gaby3.png" },
-      // { name: "Jared", file: "jared2.jpg" },
-      // { name: "Jared", file: "jared3.jpg" },
-      // { name: "Jesús G", file: "jesusg2.png" },
-      // { name: "Jesús G", file: "jesusg3.png" },
-      // { name: "Jesús T", file: "jesust2.png" },
-      // { name: "Jesús T", file: "jesust3.png" },
-      // { name: "María", file: "maria2.jpg" },
-      // { name: "Vane", file: "vane2.png" },
-      // { name: "Vane", file: "vane3.jpg" },
     ];
 
     const mount = document.getElementById("members");
@@ -319,8 +257,137 @@
       });
     }
   </script>
+
+  <!-- === Events feed (Google Sheet) === -->
+  <script>
+    // Your published Apps Script Web App endpoint:
+    window.EVENTS_API_URL = 'https://script.google.com/macros/s/AKfycbwwH-QNELsaWFbyMexOt4abYJIXTtCd6EyerkzpJoMcYFGjOhxgLkwTPULZLwAZMINn/exec';
+  </script>
+  <script>
+  (function () {
+    const API = window.EVENTS_API_URL;
+    const containers = Array.from(document.querySelectorAll('[data-events-feed]'));
+    if (!API || !containers.length) return;
+
+    const el = (tag, attrs = {}, kids = []) => {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'class') n.className = v;
+        else if (k === 'html') n.innerHTML = v;
+        else n.setAttribute(k, v);
+      });
+      kids.forEach(k => n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k));
+      return n;
+    };
+
+    // Single-image view with auto-rotate if multiple
+    const renderImages = (urls, rotateMs = 5000) => {
+      if (!urls || !urls.length) return null;
+
+      const wrap = el('div', { class: 'events-rotator' });
+      Object.assign(wrap.style, { position: 'relative' });
+
+      const img = el('img', { alt: '', loading: 'lazy' });
+      Object.assign(img.style, { width: '100%', borderRadius: '12px', display: 'block' });
+      wrap.appendChild(img);
+
+      let idx = urls.length > 1 ? Math.floor(Math.random() * urls.length) : 0;
+      let timer = null;
+
+      const show = (i) => {
+        idx = (i + urls.length) % urls.length;
+        img.src = urls[idx];
+      };
+
+      const start = () => {
+        if (timer || urls.length < 2) return;
+        timer = setInterval(() => show(idx + 1), rotateMs);
+      };
+      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+
+      // pause when tab hidden / resume on visible
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop(); else start();
+      });
+
+      // click to advance
+      wrap.addEventListener('click', () => { if (urls.length > 1) show(idx + 1); });
+
+      // hover pauses
+      wrap.addEventListener('mouseenter', stop);
+      wrap.addEventListener('mouseleave', start);
+
+      show(idx);
+      start();
+      return wrap;
+    };
+
+    const renderCard = (item, rotateMs) => {
+      const card = el('article', { class: 'events-card' });
+      Object.assign(card.style, {
+        borderRadius: '16px', padding: '20px',
+        background: 'var(--card-bg, #0f1713)',
+        border: '1px solid rgba(255,255,255,0.06)'
+      });
+
+      const imgs = renderImages(item.images, rotateMs);
+      if (imgs) card.appendChild(imgs);
+
+      const h3 = el('h3', {}, [item.title]);
+      Object.assign(h3.style, { margin: '14px 0 6px', fontSize: '1.25rem' });
+      card.appendChild(h3);
+
+      if (item.description) {
+        const p = el('p', {}, [item.description]);
+        Object.assign(p.style, { opacity: '0.85', lineHeight: '1.5' });
+        card.appendChild(p);
+      }
+
+      const footer = el('div');
+      Object.assign(footer.style, { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' });
+
+      if (item.link) {
+        const a = el('a', { href: item.link }, ['Ver más →']);
+        Object.assign(a.style, { textDecoration: 'none', fontWeight: '600', opacity: '0.95' });
+        footer.appendChild(a);
+      }
+      if (item.date) { const t = el('time', {}, [item.date]); t.style.opacity = '0.6'; footer.appendChild(t); }
+      if (footer.childNodes.length) card.appendChild(footer);
+      return card;
+    };
+
+    const hydrate = (rows) => {
+      containers.forEach(c => {
+        const limit = parseInt(c.getAttribute('data-limit') || '0', 10);
+        const rotateMs = parseInt(c.getAttribute('data-rotate-ms') || '5000', 10);
+        const items = limit ? rows.slice(0, limit) : rows;
+        c.innerHTML = '';
+        const grid = el('div');
+        Object.assign(grid.style, { display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' });
+        items.forEach(x => grid.appendChild(renderCard(x, rotateMs)));
+        c.appendChild(grid);
+      });
+    };
+
+    (async () => {
+      try {
+        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
+        const data = await res.json();
+        const clean = (Array.isArray(data) ? data : []).map(x => ({
+          ...x,
+          images: (x.images || []).map(s => String(s).trim()).filter(Boolean)
+        }));
+        hydrate(clean);
+      } catch (e) {
+        console.error('Events feed error:', e);
+      }
+    })();
+  })();
+  </script>
+  <!-- === /Events feed === -->
 </body>
 </html>
+
 
 
 
