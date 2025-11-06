@@ -91,9 +91,12 @@
         <a class="link" href="events.html">Ver todo el calendario →</a>
       </div>
 
-      <!-- REPLACED old hard-coded cards with the dynamic feed container -->
-      <div data-events-feed data-limit="4" data-rotate-ms="5000"></div>
-      <!-- END dynamic feed container -->
+      <!-- Dynamic feed: shows 3 at a time, rotates pages if there are more, per-event images rotate -->
+      <div data-events-feed
+           data-limit="3"
+           data-rotate-pages-ms="9000"
+           data-image-rotate-ms="5000"></div>
+      <!-- END dynamic feed -->
     </div>
   </section>
 
@@ -260,125 +263,149 @@
 
   <!-- === Events feed (Google Sheet) === -->
   <script>
-    // Your published Apps Script Web App endpoint:
+    // ############## CONFIG ##############
+    // Your published Google Apps Script Web App endpoint:
     window.EVENTS_API_URL = 'https://script.google.com/macros/s/AKfycbwwH-QNELsaWFbyMexOt4abYJIXTtCd6EyerkzpJoMcYFGjOhxgLkwTPULZLwAZMINn/exec';
+    // ############ END CONFIG ############
   </script>
   <script>
-  (function () {
+  (() => {
     const API = window.EVENTS_API_URL;
-    const containers = Array.from(document.querySelectorAll('[data-events-feed]'));
-    if (!API || !containers.length) return;
+    const mounts = Array.from(document.querySelectorAll('[data-events-feed]'));
+    if (!API || !mounts.length) return;
 
-    const el = (tag, attrs = {}, kids = []) => {
-      const n = document.createElement(tag);
-      Object.entries(attrs).forEach(([k, v]) => {
+    // helper
+    const el = (t, a={}, kids=[]) => {
+      const n = document.createElement(t);
+      for (const [k,v] of Object.entries(a)) {
         if (k === 'class') n.className = v;
         else if (k === 'html') n.innerHTML = v;
         else n.setAttribute(k, v);
-      });
+      }
       kids.forEach(k => n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k));
       return n;
     };
 
-    // Single-image view with auto-rotate if multiple
-    const renderImages = (urls, rotateMs = 5000) => {
-      if (!urls || !urls.length) return null;
-
-      const wrap = el('div', { class: 'events-rotator' });
-      Object.assign(wrap.style, { position: 'relative' });
-
+    // image rotator (with cache-bust + fallback)
+    const imageRotator = (urls, rotateMs=5000) => {
+      const wrap = el('div', { class: 'events-card__media' });
       const img = el('img', { alt: '', loading: 'lazy' });
-      Object.assign(img.style, { width: '100%', borderRadius: '12px', display: 'block' });
-      wrap.appendChild(img);
-
-      let idx = urls.length > 1 ? Math.floor(Math.random() * urls.length) : 0;
-      let timer = null;
-
-      const show = (i) => {
-        idx = (i + urls.length) % urls.length;
-        img.src = urls[idx];
-      };
-
-      const start = () => {
-        if (timer || urls.length < 2) return;
-        timer = setInterval(() => show(idx + 1), rotateMs);
-      };
-      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-
-      // pause when tab hidden / resume on visible
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stop(); else start();
+      Object.assign(img.style, {
+        width:'100%', height:'160px', objectFit:'cover',
+        borderRadius:'12px', background:'#0f1a12'
       });
 
-      // click to advance
-      wrap.addEventListener('click', () => { if (urls.length > 1) show(idx + 1); });
+      const setSrc = (u) => {
+        const clean = String(u||'').trim();
+        const busted = clean ? clean + (clean.includes('?')?'&':'?') + 'v=' + Date.now() : '';
+        img.onerror = () => { img.onerror = null; img.src = 'images/mexsa1.png'; };
+        img.src = busted || 'images/mexsa1.png';
+      };
 
-      // hover pauses
-      wrap.addEventListener('mouseenter', stop);
-      wrap.addEventListener('mouseleave', start);
+      let i = 0;
+      if (!urls || !urls.length) urls = ['images/mexsa1.png'];
+      setSrc(urls[i]);
+      wrap.appendChild(img);
 
-      show(idx);
-      start();
+      if (urls.length > 1 && rotateMs > 0) {
+        setInterval(() => { i = (i + 1) % urls.length; setSrc(urls[i]); }, rotateMs);
+      }
       return wrap;
     };
 
-    const renderCard = (item, rotateMs) => {
-      const card = el('article', { class: 'events-card' });
-      Object.assign(card.style, {
-        borderRadius: '16px', padding: '20px',
-        background: 'var(--card-bg, #0f1713)',
-        border: '1px solid rgba(255,255,255,0.06)'
-      });
-
-      const imgs = renderImages(item.images, rotateMs);
-      if (imgs) card.appendChild(imgs);
-
-      const h3 = el('h3', {}, [item.title]);
-      Object.assign(h3.style, { margin: '14px 0 6px', fontSize: '1.25rem' });
-      card.appendChild(h3);
-
-      if (item.description) {
-        const p = el('p', {}, [item.description]);
-        Object.assign(p.style, { opacity: '0.85', lineHeight: '1.5' });
-        card.appendChild(p);
-      }
-
-      const footer = el('div');
-      Object.assign(footer.style, { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' });
-
-      if (item.link) {
-        const a = el('a', { href: item.link }, ['Ver más →']);
-        Object.assign(a.style, { textDecoration: 'none', fontWeight: '600', opacity: '0.95' });
-        footer.appendChild(a);
-      }
-      if (item.date) { const t = el('time', {}, [item.date]); t.style.opacity = '0.6'; footer.appendChild(t); }
-      if (footer.childNodes.length) card.appendChild(footer);
-      return card;
+    // event card
+    const card = (e, imageMs) => {
+      const media = imageRotator(e.images, imageMs);
+      const body  = el('div', { class:'card__body' }, [
+        el('h3', { class:'card__title' }, [e.title || 'Evento']),
+        el('p',  { class:'muted' },      [e.whenText || e.when || '']),
+        el('p',  { class:'card__excerpt'},[e.description || '']),
+        e.link ? el('a', { class:'btn secondary', href: e.link, target:'_blank', rel:'noopener' }, ['Más info']) : el('span')
+      ]);
+      const wrap = el('article', { class:'card events-card' }, [media, body]);
+      return wrap;
     };
 
-    const hydrate = (rows) => {
-      containers.forEach(c => {
-        const limit = parseInt(c.getAttribute('data-limit') || '0', 10);
-        const rotateMs = parseInt(c.getAttribute('data-rotate-ms') || '5000', 10);
-        const items = limit ? rows.slice(0, limit) : rows;
-        c.innerHTML = '';
-        const grid = el('div');
-        Object.assign(grid.style, { display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' });
-        items.forEach(x => grid.appendChild(renderCard(x, rotateMs)));
-        c.appendChild(grid);
+    // fetch + normalize + filter + sort
+    const fetchEvents = async () => {
+      const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache:'no-store' });
+      const data = await res.json();
+
+      const rows = (Array.isArray(data) ? data : []).map(x => {
+        const images = String(x.images || x.image || '')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        const status = String(x.status || 'publish').toLowerCase();
+
+        const rawDate = String(x.date || x.when || '').trim();
+        const dt = rawDate ? new Date(rawDate) : null;
+
+        const whenText = rawDate || '';
+
+        return {
+          title: x.title || x.name || '',
+          when: rawDate,
+          whenText,
+          description: x.description || x.desc || '',
+          link: x.link || x.url || '',
+          images,
+          status,
+          _dt: isFinite(dt?.getTime?.()) ? dt : null
+        };
       });
+
+      // only published + auto-hide past dates
+      const today = new Date(); today.setHours(0,0,0,0);
+      const visible = rows
+        .filter(r => !['hide','hidden','draft','no'].includes(r.status))
+        .filter(r => !r._dt || r._dt >= today);
+
+      // soonest first (null dates last)
+      visible.sort((a,b) => {
+        const A = a._dt ? a._dt.getTime() : Infinity;
+        const B = b._dt ? b._dt.getTime() : Infinity;
+        return A - B;
+      });
+
+      return visible;
     };
 
+    const renderInto = (mount, items) => {
+      const limitAttr = Number(mount.getAttribute('data-limit') || '0'); // 0 = no limit
+      const imageMs   = Number(mount.getAttribute('data-image-rotate-ms') || '5000');
+      const pageMs    = Number(mount.getAttribute('data-rotate-pages-ms') || '0'); // 0 = no rotation
+      const grid = el('div', { class:'newsgrid' });
+      mount.innerHTML = '';
+      mount.appendChild(grid);
+
+      if (!limitAttr || items.length <= limitAttr || pageMs <= 0) {
+        items.forEach(ev => grid.appendChild(card(ev, imageMs)));
+        return;
+      }
+
+      // paginate into pages of `limitAttr` and auto-rotate pages
+      const pages = [];
+      for (let i=0; i<items.length; i+=limitAttr) pages.push(items.slice(i, i+limitAttr));
+      let p = 0;
+
+      const showPage = (idx) => {
+        p = (idx + pages.length) % pages.length;
+        grid.innerHTML = '';
+        pages[p].forEach(ev => grid.appendChild(card(ev, imageMs)));
+      };
+
+      showPage(0);
+      setInterval(() => showPage(p + 1), pageMs);
+    };
+
+    // boot
     (async () => {
       try {
-        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
-        const data = await res.json();
-        const clean = (Array.isArray(data) ? data : []).map(x => ({
-          ...x,
-          images: (x.images || []).map(s => String(s).trim()).filter(Boolean)
-        }));
-        hydrate(clean);
-      } catch (e) {
+        const events = await fetchEvents();
+        mounts.forEach(m => renderInto(m, events));
+      } catch(e) {
         console.error('Events feed error:', e);
       }
     })();
@@ -387,6 +414,7 @@
   <!-- === /Events feed === -->
 </body>
 </html>
+
 
 
 
