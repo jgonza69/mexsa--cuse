@@ -42,14 +42,12 @@
     </div>
   </section>
 
-  <!-- Quick highlights (Noticias rápidas desde Google Sheets) -->
+  <!-- Noticias rápidas (dinámico desde Google Sheet) -->
   <section class="strip">
     <div class="container">
       <div class="section__head"><h2>Noticias rápidas</h2></div>
-
-      <!-- Dinámico: se llena con Google Sheets -->
       <div id="quickNews" class="newsgrid">
-        <!-- Noticias rápidas dinámicas -->
+        <!-- Noticias dinámicas se insertan aquí -->
       </div>
     </div>
   </section>
@@ -218,6 +216,7 @@
 
   <!-- Inline: auto-render members from your /images filenames -->
   <script>
+    // Footer year (main.js also handles this, but this keeps it explicit here)
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // One card per member. Uses the FIRST photo for each person.
@@ -235,8 +234,8 @@
       { name: "Vanessa Sanchez",   file: "vane1.png" },
     ];
 
-    const mount = document.getElementById("members");
-    if (mount) {
+    const mountMembers = document.getElementById("members");
+    if (mountMembers) {
       members.forEach(({name, file}) => {
         const fig = document.createElement("figure");
         fig.className = "member-card";
@@ -248,7 +247,7 @@
         cap.textContent = name;
         fig.appendChild(img);
         fig.appendChild(cap);
-        mount.appendChild(fig);
+        mountMembers.appendChild(fig);
       });
     }
   </script>
@@ -324,12 +323,16 @@
       if (desc) body.appendChild(desc);
 
       if (item.link) {
-        const link = el('a', {
+        const isExternal = /^https?:\/\//i.test(item.link);
+        const linkAttrs = {
           class: 'inline',
-          href: item.link,
-          target: item.link.startsWith('http') ? '_blank' : undefined,
-          rel: item.link.startsWith('http') ? 'noopener' : undefined
-        }, ['Ver más →']);
+          href: item.link
+        };
+        if (isExternal) {
+          linkAttrs.target = '_blank';
+          linkAttrs.rel = 'noopener';
+        }
+        const link = el('a', linkAttrs, ['Ver más →']);
         body.appendChild(link);
       }
 
@@ -362,19 +365,6 @@
       });
     };
 
-    const renderNews = (items) => {
-      mount.innerHTML = '';
-
-      if (!items.length) {
-        mount.appendChild(
-          el('p', { class: 'muted' }, ['Pronto anunciaremos nuevas noticias.'])
-        );
-        return;
-      }
-
-      items.forEach(item => mount.appendChild(makeCard(item)));
-    };
-
     (async () => {
       try {
         const res = await fetch(
@@ -389,7 +379,8 @@
           .filter(x => x.status === 'publish')
           .slice(0, 4);
 
-        renderNews(visible);
+        mount.innerHTML = '';
+        visible.forEach(item => mount.appendChild(makeCard(item)));
       } catch (err) {
         console.error('Error cargando Noticias rápidas:', err);
       }
@@ -583,6 +574,8 @@
   <!-- === /Events feed === -->
 </body>
 </html>
+
+
 
 
 
