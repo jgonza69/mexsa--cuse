@@ -70,43 +70,16 @@
     </div>
   </section>
 
-  <!-- Month grids / list style (static reference) -->
+  <!-- Calendario del semestre (dynamic from simple semester sheet) -->
   <section class="strip">
     <div class="container">
       <div class="section__head">
         <h2>Calendario del semestre</h2>
       </div>
 
-      <div class="grid" style="grid-template-columns: 1fr 1fr; gap:1rem;">
-        <article class="card">
-          <div class="card__body">
-            <h3 class="card__title">Septiembre</h3>
-            <ul class="bullets">
-              <li>15 — LHM Fair & Apertura (Student Center) · NALFO Night</li>
-              <li>16 — <strong>Taller de Tortillas</strong> (HOL 107, 7–8 PM)</li>
-              <li>18 — LHS GBM: Charlas y Horchata</li>
-              <li>20 — Torneo de Fútbol (voluntariado + ventas)</li>
-              <li>22 — Café con Leche (La Lucha) · 23 — Noche de Cumbia + Mixed Tapes</li>
-              <li>24 — ALPFA SU: charla con chef</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card__body">
-            <h3 class="card__title">Octubre</h3>
-            <ul class="bullets">
-              <li>1 — Panel SALSA: Latinos in Syracuse</li>
-              <li>7 — <strong>Mexican Crochet Night</strong> (con CFTC)</li>
-              <li>8 — Música outside Schine · Dance Masterclass</li>
-              <li>9 — <strong>Café con Leche</strong> — Inmigración</li>
-              <li>11 — <strong>Watch Party: México vs Colombia</strong> (Schine Atrium, 9 PM)</li>
-              <li>15 — Panel de medios + Música outside Schine</li>
-              <li>16 — Café con Leche (HASA) · 22 — Música outside Schine</li>
-              <li>26 — Calentón Music</li>
-            </ul>
-          </div>
-        </article>
+      <!-- Dynamic month blocks (current + next month only, grouped) -->
+      <div id="semester-calendar" class="grid" style="grid-template-columns: 1fr 1fr; gap:1rem;">
+        <!-- JS will inject cards here -->
       </div>
     </div>
   </section>
@@ -222,10 +195,10 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-  <!-- === Events feed (Google Sheet) === -->
+  <!-- === Events feed (Google Sheet) — MEXSA events === -->
   <script>
-    // ############## CONFIG ##############
-    // Your published Google Apps Script Web App endpoint:
+    // ############## CONFIG (MEXSA events) ##############
+    // Your existing MEXSA events Apps Script Web App endpoint:
     window.EVENTS_API_URL = 'https://script.google.com/macros/s/AKfycbwwH-QNELsaWFbyMexOt4abYJIXTtCd6EyerkzpJoMcYFGjOhxgLkwTPULZLwAZMINn/exec';
     // ############ END CONFIG ############
   </script>
@@ -339,7 +312,7 @@
         return future;
       }
 
-      // mode === 'all' (not used here, but supported)
+      // mode === 'all' (not used here)
       const all = [...visible];
       all.sort((a,b) => {
         const A = a._dt ? a._dt.getTime() : Infinity;
@@ -379,9 +352,99 @@
     })();
   })();
   </script>
-  <!-- === /Events feed === -->
+  <!-- === /Events feed (MEXSA) === -->
+
+  <!-- === Semester calendar feed (simple sheet) === -->
+  <script>
+    // ############## CONFIG (Semester calendar) ##############
+    // Your new semester sheet Apps Script Web App endpoint (current + next month only):
+    window.SEMESTER_API_URL = 'https://script.google.com/macros/s/AKfycbwzQxCWcrOLqw_iVfaPwIs4RCnhcb9F0ZuAdVOXyGVK9i5m50CFtXjDJO0M32T_yOsQsg/exec';
+    // ############ END CONFIG ############
+  </script>
+  <script>
+  (() => {
+    const API = window.SEMESTER_API_URL;
+    const mount = document.getElementById('semester-calendar');
+    if (!API || !mount) return;
+
+    const el = (t, a={}, kids=[]) => {
+      const n = document.createElement(t);
+      for (const [k,v] of Object.entries(a)) {
+        if (k === 'class') n.className = v;
+        else if (k === 'html') n.innerHTML = v;
+        else n.setAttribute(k, v);
+      }
+      kids.forEach(k => n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k));
+      return n;
+    };
+
+    const monthKey = (dStr) => {
+      const d = dStr ? new Date(dStr) : null;
+      if (!d || isNaN(d)) return '';
+      // e.g., "Nov 2025"
+      return d.toLocaleString('en-US', { month:'long', year:'numeric' });
+    };
+
+    const monthSortVal = (dStr) => {
+      const d = dStr ? new Date(dStr) : null;
+      return (!d || isNaN(d)) ? Infinity : (d.getFullYear()*12 + d.getMonth());
+    };
+
+    const renderMonthCard = (title, items) => {
+      const ul = el('ul', { class:'bullets' });
+      items.forEach(it => {
+        const line = `${it.date_label || ''} — ${it.title || ''}${it.location ? ` (${it.location})` : ''}`;
+        ul.appendChild(el('li', {}, [line]));
+      });
+
+      return el('article', { class:'card' }, [
+        el('div', { class:'card__body' }, [
+          el('h3', { class:'card__title' }, [title]),
+          ul
+        ])
+      ]);
+    };
+
+    (async () => {
+      try {
+        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache:'no-store' });
+        const data = await res.json();
+        const rows = Array.isArray(data) ? data : [];
+
+        // Group by month (already filtered by script to current + next)
+        const groups = new Map();
+        rows.forEach(r => {
+          const key = monthKey(r.date);
+          if (!key) return;
+          if (!groups.has(key)) groups.set(key, []);
+          groups.get(key).push(r);
+        });
+
+        // Sort months by date asc; within month, sort by date asc
+        const monthEntries = Array.from(groups.entries())
+          .sort((a,b) => monthSortVal(a[1][0]?.date) - monthSortVal(b[1][0]?.date));
+
+        mount.innerHTML = '';
+        if (!monthEntries.length) {
+          mount.appendChild(el('p', { class:'muted' }, ['No hay eventos publicados para este mes.']));
+          return;
+        }
+
+        monthEntries.forEach(([title, items]) => {
+          items.sort((a,b) => new Date(a.date) - new Date(b.date));
+          mount.appendChild(renderMonthCard(title, items));
+        });
+      } catch (e) {
+        console.error('Semester calendar error:', e);
+        mount.innerHTML = '<p class="muted">No se pudo cargar el calendario.</p>';
+      }
+    })();
+  })();
+  </script>
+  <!-- === /Semester calendar feed === -->
 </body>
 </html>
+
 
 
 
