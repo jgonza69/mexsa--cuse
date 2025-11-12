@@ -154,8 +154,8 @@
   <section class="strip" id="spotlights">
     <div class="container">
       <div class="section__head">
-        <h2>Internship Spotlight</h2>
-        <p class="muted">Próximamente — comparte tu experiencia para inspirar a la comunidad.</p>
+        <h2>Spotlight</h2>
+        <p class="muted">Comparte tu experiencia para inspirar a la comunidad.</p>
       </div>
       <!-- dynamic grid goes here -->
       <div id="spotlights-grid" class="newsgrid" aria-live="polite"></div>
@@ -189,7 +189,7 @@
 
   <!-- === Spotlights feed config === -->
   <script>
-    // Use your Web App URL for the Spotlights sheet:
+    // Web App URL for the Spotlights sheet:
     window.SPOTLIGHTS_API_URL = 'https://script.google.com/macros/s/AKfycbxyyOes__1yBv8rrxKgKu0rUg-5H2ktdbw6gOX4NDzMeH7cD3YnHyb_KA_n8h2qprOkkg/exec';
   </script>
 
@@ -199,7 +199,6 @@
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     // ==== DATA ====
-    // Filenames MUST exist in /images exactly as written.
     const members = [
       { name: "Carlos Silva",               file: "carlos1.jpg" },
       { name: "Cesar Barrera",              file: "cesar1.jpg" },
@@ -214,7 +213,6 @@
       { name: "Vanessa Sanchez",            file: "vane1.png" }
     ];
 
-    // E-Board roles (mapped by 'file')
     const eboard = [
       { file: "vale1.jpg",   title: "President" },
       { file: "vane1.png",   title: "Vice President" },
@@ -232,12 +230,10 @@
       return { ...role, name: m ? m.name : role.file };
     });
 
-    // Extra photos if you add more later
     const extraPhotos = [
       // { name: "Carlos Silva", file: "carlos2.jpg" },
     ];
 
-    // Helper for image fallback
     const fallbackImg = (img, altText = "Foto no disponible") => {
       img.onerror = null;
       img.src = "images/mexsa1.png";
@@ -309,7 +305,7 @@
     }
 
     // =======================
-    // Spotlights: dynamic load
+    // Spotlights: dynamic load (multi-image + rotation)
     // =======================
     (async function loadSpotlights () {
       const API = window.SPOTLIGHTS_API_URL;
@@ -317,17 +313,66 @@
       const section = document.getElementById('spotlights');
       if (!API || !mount) return;
 
+      // --- helpers ---
+      const normalizeImages = (val) => {
+        // Accept array OR comma-separated string; strip leading slashes so it works on subpaths
+        const list = Array.isArray(val) ? val :
+          String(val || '')
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+
+        const cleaned = list.map(p => p.replace(/^\/+/, '')); // remove leading "/"
+        return cleaned.length ? cleaned : ["images/mexsa1.png"];
+      };
+
+      const imageRotator = (urls, ms = 4000, altText = "Spotlight") => {
+        const wrap = document.createElement('div');
+        wrap.className = 'card__media';
+        const img = document.createElement('img');
+        img.className = 'card__img';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.alt = altText;
+        img.onerror = () => fallbackImg(img, altText);
+        wrap.appendChild(img);
+
+        let i = 0;
+        const setSrc = () => { img.src = urls[i]; };
+        setSrc();
+
+        if (urls.length > 1) {
+          let timer = setInterval(() => {
+            i = (i + 1) % urls.length;
+            setSrc();
+          }, ms);
+
+          // Pause on hover; resume on leave
+          wrap.addEventListener('mouseenter', () => { clearInterval(timer); timer = null; });
+          wrap.addEventListener('mouseleave', () => {
+            if (!timer) timer = setInterval(() => { i = (i + 1) % urls.length; setSrc(); }, ms);
+          });
+          // Pause when tab hidden
+          document.addEventListener('visibilitychange', () => {
+            if (document.hidden) { clearInterval(timer); timer = null; }
+            else if (!timer) { timer = setInterval(() => { i = (i + 1) % urls.length; setSrc(); }, ms); }
+          });
+        }
+        return wrap;
+      };
+
       try {
         const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
         let rows = await res.json();
         if (!Array.isArray(rows)) rows = [];
 
-        // Client-side safety: enforce status filtering + max 2
+        // Filter by status; cap at 2
         const hideSet = new Set(['hide','hidden','draft','no','n','0']);
-        const visible = rows.filter(r => !hideSet.has(String(r.status || '').toLowerCase())).slice(0, 2);
+        const visible = rows
+          .filter(r => !hideSet.has(String(r.status || '').toLowerCase()))
+          .slice(0, 2);
 
         if (!visible.length) {
-          // Nothing to show: hide the whole section to keep the page tidy
           section.style.display = 'none';
           return;
         }
@@ -336,13 +381,9 @@
           const art = document.createElement('article');
           art.className = 'card';
 
-          const img = document.createElement('img');
-          img.className = 'card__img';
-          img.loading = 'lazy';
-          img.decoding = 'async';
-          img.src = String(item.image || '').trim() || 'images/mexsa1.png';
-          img.alt = item.title ? `Spotlight — ${item.title}` : 'Spotlight';
-          img.onerror = () => fallbackImg(img, img.alt);
+          // images (supports "images" array or comma-separated string in "image"/"images")
+          const imgs = normalizeImages(item.images ?? item.image);
+          const media = imageRotator(imgs, 4000, item.title ? `Spotlight — ${item.title}` : 'Spotlight');
 
           const body = document.createElement('div');
           body.className = 'card__body';
@@ -367,7 +408,7 @@
             body.appendChild(a);
           }
 
-          art.append(img, body);
+          art.append(media, body);
           return art;
         };
 
@@ -381,6 +422,7 @@
   </script>
 </body>
 </html>
+
 
 
 
