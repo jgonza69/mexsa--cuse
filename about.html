@@ -150,29 +150,15 @@
     </div>
   </section>
 
-  <!-- Spotlights placeholder -->
+  <!-- Spotlights (dynamic) -->
   <section class="strip" id="spotlights">
     <div class="container">
       <div class="section__head">
         <h2>Internship Spotlight</h2>
         <p class="muted">Próximamente — comparte tu experiencia para inspirar a la comunidad.</p>
       </div>
-      <div class="newsgrid">
-        <article class="card">
-          <img class="card__img" src="images/mexsa1.png" alt="Spotlight">
-          <div class="card__body">
-            <h3 class="card__title">Título del Spotlight</h3>
-            <p class="card__excerpt">Una breve descripción de la práctica o proyecto.</p>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__img" src="images/mexsa2.png" alt="Spotlight">
-          <div class="card__body">
-            <h3 class="card__title">Título del Spotlight</h3>
-            <p class="card__excerpt">Otra historia que pronto compartiremos.</p>
-          </div>
-        </article>
-      </div>
+      <!-- dynamic grid goes here -->
+      <div id="spotlights-grid" class="newsgrid" aria-live="polite"></div>
     </div>
   </section>
 
@@ -200,6 +186,13 @@
   </footer>
 
   <script src="main.js"></script>
+
+  <!-- === Spotlights feed config === -->
+  <script>
+    // Use your Web App URL for the Spotlights sheet:
+    window.SPOTLIGHTS_API_URL = 'https://script.google.com/macros/s/AKfycbxyyOes__1yBv8rrxKgKu0rUg-5H2ktdbw6gOX4NDzMeH7cD3YnHyb_KA_n8h2qprOkkg/exec';
+  </script>
+
   <script>
     // Footer year
     const yearEl = document.getElementById('year');
@@ -214,8 +207,8 @@
       { name: "Emilia Monroy Hortos",       file: "emi2.png" },
       { name: "Gaby Ramirez",               file: "gaby1.jpg" },
       { name: "Jared Gonzalez",             file: "jared1.jpg" },
-      { name: "Jesús Garcia",               file: "jesusg1.png" },   // Jesús #1
-      { name: "Jesús Tiburcio Zane",        file: "jesust1.png" },   // Jesús #2
+      { name: "Jesús Garcia",               file: "jesusg1.png" },
+      { name: "Jesús Tiburcio Zane",        file: "jesust1.png" },
       { name: "María Ruelas",               file: "maria1.jpg" },
       { name: "Valeria Martinez Guiterrez", file: "vale1.jpg" },
       { name: "Vanessa Sanchez",            file: "vane1.png" }
@@ -232,7 +225,7 @@
       { file: "danna2.png",  title: "Graphic Design Coordinator" },
       { file: "emi2.png",    title: "Network Coordinator" },
       { file: "maria1.jpg",  title: "Marketing Director" },
-      { file: "jesusg1.png", title: "Philanthropy Chair" },  /* <-- fixed comma */
+      { file: "jesusg1.png", title: "Philanthropy Chair" },
       { file: "jared1.jpg",  title: "Social Media Coordinator" }
     ].map(role => {
       const m = members.find(x => x.file === role.file);
@@ -244,7 +237,7 @@
       // { name: "Carlos Silva", file: "carlos2.jpg" },
     ];
 
-    // ==== RENDER HELPERS ====
+    // Helper for image fallback
     const fallbackImg = (img, altText = "Foto no disponible") => {
       img.onerror = null;
       img.src = "images/mexsa1.png";
@@ -314,9 +307,81 @@
         grid.appendChild(fig);
       });
     }
+
+    // =======================
+    // Spotlights: dynamic load
+    // =======================
+    (async function loadSpotlights () {
+      const API = window.SPOTLIGHTS_API_URL;
+      const mount = document.getElementById('spotlights-grid');
+      const section = document.getElementById('spotlights');
+      if (!API || !mount) return;
+
+      try {
+        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
+        let rows = await res.json();
+        if (!Array.isArray(rows)) rows = [];
+
+        // Client-side safety: enforce status filtering + max 2
+        const hideSet = new Set(['hide','hidden','draft','no','n','0']);
+        const visible = rows.filter(r => !hideSet.has(String(r.status || '').toLowerCase())).slice(0, 2);
+
+        if (!visible.length) {
+          // Nothing to show: hide the whole section to keep the page tidy
+          section.style.display = 'none';
+          return;
+        }
+
+        const makeCard = (item) => {
+          const art = document.createElement('article');
+          art.className = 'card';
+
+          const img = document.createElement('img');
+          img.className = 'card__img';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.src = String(item.image || '').trim() || 'images/mexsa1.png';
+          img.alt = item.title ? `Spotlight — ${item.title}` : 'Spotlight';
+          img.onerror = () => fallbackImg(img, img.alt);
+
+          const body = document.createElement('div');
+          body.className = 'card__body';
+
+          const h3 = document.createElement('h3');
+          h3.className = 'card__title';
+          h3.textContent = item.title || 'Spotlight';
+
+          const p = document.createElement('p');
+          p.className = 'card__excerpt';
+          p.textContent = item.description || '';
+
+          body.append(h3, p);
+
+          if (item.link) {
+            const a = document.createElement('a');
+            a.className = 'inline';
+            a.href = item.link;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = 'Ver más →';
+            body.appendChild(a);
+          }
+
+          art.append(img, body);
+          return art;
+        };
+
+        mount.innerHTML = '';
+        visible.forEach(row => mount.appendChild(makeCard(row)));
+      } catch (err) {
+        console.error('Spotlights feed error:', err);
+        // If the feed fails, keep the section but show nothing
+      }
+    })();
   </script>
 </body>
 </html>
+
 
 
 
