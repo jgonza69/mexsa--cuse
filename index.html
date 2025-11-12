@@ -42,43 +42,14 @@
     </div>
   </section>
 
-  <!-- Quick highlights -->
+  <!-- Quick highlights (Noticias rápidas desde Google Sheets) -->
   <section class="strip">
     <div class="container">
       <div class="section__head"><h2>Noticias rápidas</h2></div>
-      <div class="newsgrid">
-        <article class="card">
-          <img class="card__img" src="images/mexsa2.png" alt="Conoce a la mesa directiva">
-          <div class="card__body">
-            <h3 class="card__title">Conoce a la Mesa Directiva</h3>
-            <p class="card__excerpt">Presentaciones del E-Board 24-25 — quiénes somos y en qué trabajamos.</p>
-            <a class="inline" href="about.html#eboard">Ver equipo →</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__img" src="images/tortilla.png" alt="Taller de tortillas">
-          <div class="card__body">
-            <h3 class="card__title">Taller de Tortillas</h3>
-            <p class="card__excerpt">Aprende técnicas tradicionales y el porqué cultural detrás del maíz.</p>
-            <a class="inline" href="events.html#tortillas">Detalles →</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__img" src="images/recursos1.png" alt="Activismo y comunidad">
-          <div class="card__body">
-            <h3 class="card__title">Solidaridad & Recursos</h3>
-            <p class="card__excerpt">Conoce tus derechos, recursos locales y formas de involucrarte.</p>
-            <a class="inline" href="events.html#recursos">Ver recursos →</a>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__img" src="images/aquiestamos1.jpg" alt="MEXSA puntitos">
-          <div class="card__body">
-            <h3 class="card__title">MEXSA puntitos</h3>
-            <p class="card__excerpt">Datos, tips y mini-posts culturales cada semana.</p>
-            <a class="inline" href="events.html#educacion">Explorar →</a>
-          </div>
-        </article>
+
+      <!-- Dinámico: se llena con Google Sheets -->
+      <div id="quickNews" class="newsgrid">
+        <!-- Noticias rápidas dinámicas -->
       </div>
     </div>
   </section>
@@ -282,6 +253,151 @@
     }
   </script>
 
+  <!-- === Noticias rápidas feed (Google Sheet) === -->
+  <script>
+    // Web App de Google Apps Script para NOTICIAS RÁPIDAS
+    window.NEWS_API_URL = 'https://script.google.com/macros/s/AKfycbwxkKclF1wA4JvPB7ewAM5722tatZhc6Kc4UbhoKerygoejMZz7Ero77s8fFi_QHU3WAg/exec';
+  </script>
+  <script>
+  (function () {
+    const API = window.NEWS_API_URL;
+    const mount = document.getElementById('quickNews');
+    if (!API || !mount) return;
+
+    const el = (tag, attrs = {}, kids = []) => {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'class') n.className = v;
+        else if (k === 'html') n.innerHTML = v;
+        else n.setAttribute(k, v);
+      });
+      kids.forEach(k => n.appendChild(typeof k === 'string'
+        ? document.createTextNode(k)
+        : k
+      ));
+      return n;
+    };
+
+    // Crea <img> que soporta múltiples URLs (clic para cambiar)
+    const makeImage = (images) => {
+      const list = (Array.isArray(images) && images.length)
+        ? images
+        : ['images/mexsa1.png']; // fallback
+
+      let idx = 0;
+      const img = document.createElement('img');
+      img.className = 'card__img';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.alt = '';
+      img.src = list[0];
+
+      if (list.length > 1) {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => {
+          idx = (idx + 1) % list.length;
+          img.src = list[idx];
+        });
+      }
+
+      img.onerror = () => {
+        img.onerror = null;
+        img.src = 'images/mexsa1.png';
+      };
+
+      return img;
+    };
+
+    const makeCard = (item) => {
+      const card = el('article', { class: 'card' });
+
+      const img = makeImage(item.images);
+      card.appendChild(img);
+
+      const body = el('div', { class: 'card__body' });
+      const title = el('h3', { class: 'card__title' }, [item.title || 'Noticia']);
+      const desc = item.description
+        ? el('p', { class: 'card__excerpt' }, [item.description])
+        : null;
+
+      body.appendChild(title);
+      if (desc) body.appendChild(desc);
+
+      if (item.link) {
+        const link = el('a', {
+          class: 'inline',
+          href: item.link,
+          target: item.link.startsWith('http') ? '_blank' : undefined,
+          rel: item.link.startsWith('http') ? 'noopener' : undefined
+        }, ['Ver más →']);
+        body.appendChild(link);
+      }
+
+      card.appendChild(body);
+      return card;
+    };
+
+    const normalizeRows = (raw) => {
+      // Soporta tanto [{...}] como { noticias: [...] }
+      const rows = Array.isArray(raw)
+        ? raw
+        : (Array.isArray(raw?.noticias) ? raw.noticias : []);
+
+      return rows.map(r => {
+        const imgField = Array.isArray(r.images) ? r.images : (r.image || r.images || '');
+        const images = Array.isArray(imgField)
+          ? imgField
+          : String(imgField || '')
+              .split(',')
+              .map(s => s.trim())
+              .filter(Boolean);
+
+        return {
+          title: r.title || '',
+          description: r.description || '',
+          link: r.link || '',
+          status: String(r.status || 'publish').toLowerCase(),
+          images
+        };
+      });
+    };
+
+    const renderNews = (items) => {
+      mount.innerHTML = '';
+
+      if (!items.length) {
+        mount.appendChild(
+          el('p', { class: 'muted' }, ['Pronto anunciaremos nuevas noticias.'])
+        );
+        return;
+      }
+
+      items.forEach(item => mount.appendChild(makeCard(item)));
+    };
+
+    (async () => {
+      try {
+        const res = await fetch(
+          API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(),
+          { cache: 'no-store' }
+        );
+        const json = await res.json();
+        const all = normalizeRows(json);
+
+        // Solo mostrar status = publish y máximo 4
+        const visible = all
+          .filter(x => x.status === 'publish')
+          .slice(0, 4);
+
+        renderNews(visible);
+      } catch (err) {
+        console.error('Error cargando Noticias rápidas:', err);
+      }
+    })();
+  })();
+  </script>
+  <!-- === /Noticias rápidas feed === -->
+
   <!-- === Events feed (Google Sheet) === -->
   <script>
     // Your published Apps Script Web App endpoint:
@@ -467,6 +583,7 @@
   <!-- === /Events feed === -->
 </body>
 </html>
+
 
 
 
