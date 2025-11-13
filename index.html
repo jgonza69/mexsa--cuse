@@ -1,577 +1,516 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MEXSA @ Syracuse — Inicio</title>
-  <meta name="description" content="Cultura, comunidad y orgullo mexicano en Syracuse University. Talleres, eventos, educación y solidaridad.">
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="images/mexsa1.png" />
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>MEXSA @ Syracuse — Inicio</title>
+ <meta name="description" content="Cultura, comunidad y orgullo mexicano en Syracuse University. Talleres, eventos, educación y solidaridad.">
+ <link rel="stylesheet" href="styles.css" />
+ <link rel="icon" href="images/mexsa1.png" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">
-        MEXSA<span class="pill">SYR</span>
-      </a>
-      <nav id="nav" class="nav">
-        <a href="index.html" aria-current="page">Inicio</a>
-        <a href="events.html">Eventos</a>
-        <a href="about.html">Nosotros</a>
-        <a href="join.html" class="cta">Únete</a>
-      </nav>
-      <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero hero--stadium" style="background-image:
-    linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
-    url('images/aquiestamos1.jpg');">
-    <div class="hero__overlay">
-      <div class="container hero__content">
-        <p class="pill" style="margin-bottom:.6rem;">Bienvenidos</p>
-        <h1 class="hero__title">Mexican Student Association @ Syracuse</h1>
-        <p class="hero__subtitle">Comunidad, cultura y acción — talleres, educación y eventos para todxs.</p>
-        <div class="actions">
-          <a class="btn" href="join.html">Únete hoy</a>
-          <a class="btn secondary" href="events.html">Ver calendario</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Noticias rápidas (dinámico desde Google Sheet) -->
-  <section class="strip">
-    <div class="container">
-      <div class="section__head"><h2>Noticias rápidas</h2></div>
-      <div id="quickNews" class="newsgrid">
-        <!-- Noticias dinámicas se insertan aquí -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Próximos eventos (dinámico desde Google Sheet) -->
-  <section class="section">
-    <div class="container">
-      <div class="section__head">
-        <h2>Próximos eventos destacados</h2>
-        <a class="link" href="events.html">Ver todo el calendario →</a>
-      </div>
-
-      <!-- Feed dinámico: muestra 3 a la vez y rota páginas si hay más -->
-      <div
-        data-events-feed
-        data-mode="upcoming"
-        data-limit="3"
-        data-image-rotate-ms="5000"
-        data-rotate-pages-ms="9000">
-      </div>
-      <!-- END dynamic feed -->
-    </div>
-  </section>
-
-  <!-- Eventos pasados (los 3 más recientes, con rotación de páginas) -->
-  <section class="strip">
-    <div class="container">
-      <div class="section__head">
-        <h2>Eventos pasados</h2>
-        <a class="link" href="events.html">Ver más →</a>
-      </div>
-
-      <div
-        data-events-feed
-        data-mode="past"
-        data-limit="3"
-        data-image-rotate-ms="5000"
-        data-rotate-pages-ms="9000">
-      </div>
-    </div>
-  </section>
-
-  <!-- Educación -->
-  <section class="section section--dark" id="educacion">
-    <div class="container">
-      <div class="section__head"><h2>Educación & Comunidad</h2></div>
-      <div class="newsgrid">
-        <article class="card">
-          <img class="card__img" src="images/diadelosmuertos1.jpeg" alt="Qué es Día de los Muertos">
-          <div class="card__body">
-            <h3 class="card__title">¿Qué es el Día de los Muertos?</h3>
-            <p class="card__excerpt">Tradición para honrar y celebrar la vida de quienes ya no están. Ofrendas, cempasúchil y memoria viva.</p>
-            <a class="inline" href="events.html#diadelosmuertos">Leer más →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img class="card__img" src="images/Kyr1.png" alt="Conoce tus derechos">
-          <div class="card__body">
-            <h3 class="card__title">Conoce tus derechos</h3>
-            <p class="card__excerpt">Recursos bilingües sobre contacto con ICE y la policía. Mantén la calma y pide abogadx.</p>
-            <a class="inline" href="events.html#kyrights">Descargar carteles →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img class="card__img" src="images/aquiestamos1.jpg" alt="Alligator Alcatraz">
-          <div class="card__body">
-            <h3 class="card__title">Alligator Alcatraz</h3>
-            <p class="card__excerpt">Información sobre el centro de detención en los Everglades y formas de ayudar.</p>
-            <a class="inline" href="https://immigrantjustice.org/ways-to-help/" target="_blank" rel="noopener">Actúa ahora →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img class="card__img" src="images/lectura1.jpeg" alt="Lecturas recomendadas">
-          <div class="card__body">
-            <h3 class="card__title">Lecturas recomendadas</h3>
-            <p class="card__excerpt">Historia, arte y migración para empezar tu propio club de lectura.</p>
-            <a class="inline" href="events.html#lecturas">Ver lista →</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Members (auto from /images) -->
-  <section class="section">
-    <div class="container">
-      <div class="section__head"><h2>Nuestro equipo</h2></div>
-      <div id="members" class="gallery-grid"></div>
-    </div>
-  </section>
-
-  <!-- Únete + Social -->
-  <section class="section">
-    <div class="container">
-      <div class="section__head"><h2>Únete a la comunidad</h2></div>
-      <div class="grid" style="grid-template-columns:2fr 1fr; gap:1rem;">
-        <article class="card">
-          <div class="card__body">
-            <h3 class="card__title">Recibe noticias y eventos</h3>
-            <p class="card__excerpt">Inscríbete para enterarte de talleres, fiestas, colaboraciones y oportunidades.</p>
-            <a class="btn" href="join.html">Registrarme</a>
-          </div>
-        </article>
-        <article class="card">
-          <div class="card__body">
-            <h3 class="card__title">Síguenos</h3>
-            <p class="muted">Instagram, GroupMe, LinkedIn</p>
-            <div class="grid" style="grid-template-columns:repeat(3,1fr);">
-              <a class="social-link"
-                 href="https://www.instagram.com/mexsa.cuse/"
-                 target="_blank" rel="noopener"
-                 aria-label="Instagram de MEXSA">
-                <img class="card__img" style="height:90px"
-                     src="images/iglogo.jpeg" alt="Instagram" loading="lazy" decoding="async">
-              </a>
-
-              <a class="social-link"
-                 href="https://groupme.com/join_group/108355187/lu7G3Xc1"
-                 target="_blank" rel="noopener"
-                 aria-label="Únete al GroupMe de MEXSA">
-                <img class="card__img" style="height:90px"
-                     src="images/groupme.jpeg" alt="GroupMe" loading="lazy" decoding="async">
-              </a>
-
-              <a class="social-link"
-                 href="https://www.linkedin.com/in/mexsasu"
-                 target="_blank" rel="noopener"
-                 aria-label="LinkedIn de MEXSA SU">
-                <img class="card__img" style="height:90px"
-                     src="images/linkedln.png" alt="LinkedIn" loading="lazy" decoding="async">
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footergrid">
-      <div>
-        <div class="brand brand--footer">MEXSA<span class="pill">SYR</span></div>
-        <p class="muted">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
-      </div>
-      <nav class="footernav">
-        <a href="index.html" aria-current="page">Inicio</a>
-        <a href="events.html">Eventos</a>
-        <a href="about.html">Nosotros</a>
-        <a href="join.html">Únete</a>
-      </nav>
-      <div class="footercta">
-        <p class="muted">¿Preguntas? <a href="mailto:mexsacuse@gmail.com">mexsacuse@gmail.com</a></p>
-        <a class="btn" href="join.html">Hazte miembro</a>
-      </div>
-    </div>
-    <div class="container legal">
-      <p>© <span id="year"></span> MEXSA @ Syracuse • All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="main.js"></script>
-
-  <!-- Inline: auto-render members from your /images filenames -->
-  <script>
-    // Footer year (main.js also handles this, but this keeps it explicit here)
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // One card per member. Uses the FIRST photo for each person.
-    const members = [
-      { name: "Carlos Silva", file: "carlos1.jpg" },
-      { name: "Cesar Barrera",  file: "cesar1.jpg" },
-      { name: "Danna Ochoa Cardenas",  file: "danna2.png" },
-      { name: "Emilia Monroy Hortos",    file: "emi2.png" },
-      { name: "Gaby Ramirez",   file: "gaby1.jpg" },
-      { name: "Jared Gonzalez",  file: "jared1.jpg" },
-      { name: "Jesús Garcia", file: "jesusg1.png" },
-      { name: "Jesús Tiburcio Zane", file: "jesust1.png" },
-      { name: "María Ruelas",  file: "maria1.jpg" },
-      { name: "Valeria Martinez Guiterrez",   file: "vale1.jpg" },
-      { name: "Vanessa Sanchez",   file: "vane1.png" },
-    ];
-
-    const mountMembers = document.getElementById("members");
-    if (mountMembers) {
-      members.forEach(({name, file}) => {
-        const fig = document.createElement("figure");
-        fig.className = "member-card";
-        const img = document.createElement("img");
-        img.loading = "lazy";
-        img.src = `images/${file}`;
-        img.alt = name;
-        const cap = document.createElement("figcaption");
-        cap.textContent = name;
-        fig.appendChild(img);
-        fig.appendChild(cap);
-        mountMembers.appendChild(fig);
-      });
-    }
-  </script>
-
-  <!-- === Noticias rápidas feed (Google Sheet) === -->
-  <script>
-    // Web App de Google Apps Script para NOTICIAS RÁPIDAS
-    window.NEWS_API_URL = 'https://script.google.com/macros/s/AKfycbwxkKclF1wA4JvPB7ewAM5722tatZhc6Kc4UbhoKerygoejMZz7Ero77s8fFi_QHU3WAg/exec';
-  </script>
-  <script>
-  (function () {
-    const API = window.NEWS_API_URL;
-    const mount = document.getElementById('quickNews');
-    if (!API || !mount) return;
-
-    const el = (tag, attrs = {}, kids = []) => {
-      const n = document.createElement(tag);
-      Object.entries(attrs).forEach(([k, v]) => {
-        if (k === 'class') n.className = v;
-        else if (k === 'html') n.innerHTML = v;
-        else n.setAttribute(k, v);
-      });
-      kids.forEach(k => n.appendChild(typeof k === 'string'
-        ? document.createTextNode(k)
-        : k
-      ));
-      return n;
-    };
-
-    // Crea <img> que soporta múltiples URLs (clic para cambiar)
-    const makeImage = (images) => {
-      const list = (Array.isArray(images) && images.length)
-        ? images
-        : ['images/mexsa1.png']; // fallback
-
-      let idx = 0;
-      const img = document.createElement('img');
-      img.className = 'card__img';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.alt = '';
-      img.src = list[0];
-
-      if (list.length > 1) {
-        img.style.cursor = 'pointer';
-        img.addEventListener('click', () => {
-          idx = (idx + 1) % list.length;
-          img.src = list[idx];
-        });
-      }
-
-      img.onerror = () => {
-        img.onerror = null;
-        img.src = 'images/mexsa1.png';
-      };
-
-      return img;
-    };
-
-    const makeCard = (item) => {
-      const card = el('article', { class: 'card' });
-
-      const img = makeImage(item.images);
-      card.appendChild(img);
-
-      const body = el('div', { class: 'card__body' });
-      const title = el('h3', { class: 'card__title' }, [item.title || 'Noticia']);
-      const desc = item.description
-        ? el('p', { class: 'card__excerpt' }, [item.description])
-        : null;
-
-      body.appendChild(title);
-      if (desc) body.appendChild(desc);
-
-      if (item.link) {
-        const isExternal = /^https?:\/\//i.test(item.link);
-        const linkAttrs = {
-          class: 'inline',
-          href: item.link
-        };
-        if (isExternal) {
-          linkAttrs.target = '_blank';
-          linkAttrs.rel = 'noopener';
-        }
-        const link = el('a', linkAttrs, ['Ver más →']);
-        body.appendChild(link);
-      }
-
-      card.appendChild(body);
-      return card;
-    };
-
-    const normalizeRows = (raw) => {
-      // Soporta tanto [{...}] como { noticias: [...] }
-      const rows = Array.isArray(raw)
-        ? raw
-        : (Array.isArray(raw?.noticias) ? raw.noticias : []);
-
-      return rows.map(r => {
-        const imgField = Array.isArray(r.images) ? r.images : (r.image || r.images || '');
-        const images = Array.isArray(imgField)
-          ? imgField
-          : String(imgField || '')
-              .split(',')
-              .map(s => s.trim())
-              .filter(Boolean);
-
-        return {
-          title: r.title || '',
-          description: r.description || '',
-          link: r.link || '',
-          status: String(r.status || 'publish').toLowerCase(),
-          images
-        };
-      });
-    };
-
-    (async () => {
-      try {
-        const res = await fetch(
-          API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(),
-          { cache: 'no-store' }
-        );
-        const json = await res.json();
-        const all = normalizeRows(json);
-
-        // Solo mostrar status = publish y máximo 4
-        const visible = all
-          .filter(x => x.status === 'publish')
-          .slice(0, 4);
-
-        mount.innerHTML = '';
-        visible.forEach(item => mount.appendChild(makeCard(item)));
-      } catch (err) {
-        console.error('Error cargando Noticias rápidas:', err);
-      }
-    })();
-  })();
-  </script>
-  <!-- === /Noticias rápidas feed === -->
-
-  <!-- === Events feed (Google Sheet) === -->
-  <script>
-    // Your published Apps Script Web App endpoint:
-    window.EVENTS_API_URL = 'https://script.google.com/macros/s/AKfycbwwH-QNELsaWFbyMexOt4abYJIXTtCd6EyerkzpJoMcYFGjOhxgLkwTPULZLwAZMINn/exec';
-  </script>
-  <script>
-  (function () {
-    const API = window.EVENTS_API_URL;
-    const mounts = Array.from(document.querySelectorAll('[data-events-feed]'));
-    if (!API || !mounts.length) return;
-
-    const el = (tag, attrs = {}, kids = []) => {
-      const n = document.createElement(tag);
-      Object.entries(attrs).forEach(([k, v]) => {
-        if (k === 'class') n.className = v;
-        else if (k === 'html') n.innerHTML = v;
-        else n.setAttribute(k, v);
-      });
-      kids.forEach(k => n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k));
-      return n;
-    };
-
-    // Single-image view with auto-rotate if multiple
-    const imageRotator = (urls, rotateMs = 5000) => {
-      const wrap = el('div', { class: 'events-rotator' });
-      Object.assign(wrap.style, { position: 'relative' });
-
-      const img = el('img', { alt: '', loading: 'lazy' });
-      Object.assign(img.style, { width: '100%', borderRadius: '12px', display: 'block', height:'160px', objectFit:'cover', background:'#0f1a12' });
-      wrap.appendChild(img);
-
-      const setSrc = (u) => {
-        const clean = String(u||'').trim();
-        const busted = clean ? clean + (clean.includes('?')?'&':'?') + 'v=' + Date.now() : '';
-        img.onerror = () => { img.onerror = null; img.src = 'images/mexsa1.png'; };
-        img.src = busted || 'images/mexsa1.png';
-      };
-
-      let idx = urls && urls.length ? Math.floor(Math.random() * urls.length) : 0;
-      const list = (urls && urls.length) ? urls : ['images/mexsa1.png'];
-
-      const show = (i) => { idx = (i + list.length) % list.length; setSrc(list[idx]); };
-
-      let timer = null;
-      const start = () => {
-        if (timer || list.length < 2 || rotateMs <= 0) return;
-        timer = setInterval(() => show(idx + 1), rotateMs);
-      };
-      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-
-      // pause/resume + click advance
-      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
-      wrap.addEventListener('click', () => { if (list.length > 1) show(idx + 1); });
-      wrap.addEventListener('mouseenter', stop);
-      wrap.addEventListener('mouseleave', start);
-
-      show(idx);
-      start();
-      return wrap;
-    };
-
-    const renderCard = (item, rotateMs) => {
-      const card = el('article', { class: 'card events-card' });
-      const media = imageRotator(item.images, rotateMs);
-      const body  = el('div', { class:'card__body' }, [
-        el('h3', { class:'card__title' }, [item.title || 'Evento']),
-        el('p',  { class:'muted' },      [item.whenText || item.when || '']),
-        item.description ? el('p',  { class:'card__excerpt'}, [item.description]) : el('span'),
-        item.link ? el('a', { class:'btn secondary', href:item.link, target:'_blank', rel:'noopener' }, ['Más info']) : el('span')
-      ]);
-      card.append(media, body);
-      return card;
-    };
-
-    const normalize = (data) => {
-      return (Array.isArray(data) ? data : []).map(x => {
-        const images = Array.isArray(x.images)
-          ? x.images
-          : String(x.images || x.image || '')
-              .split(',')
-              .map(s => s.trim())
-              .filter(Boolean);
-
-        const status = String(x.status || 'publish').toLowerCase();
-        const rawDate = String(x.date || x.when || '').trim();
-        const dt = rawDate ? new Date(rawDate) : null;
-
-        return {
-          title: x.title || x.name || '',
-          when: rawDate,
-          whenText: rawDate || '',
-          description: x.description || x.desc || '',
-          link: x.link || x.url || '',
-          images,
-          status,
-          _dt: isFinite(dt?.getTime?.()) ? dt : null
-        };
-      });
-    };
-
-    const filterSort = (rows, mode) => {
-      const today = new Date(); today.setHours(0,0,0,0);
-      const visible = rows.filter(r => !['hide','hidden','draft','no'].includes(r.status));
-
-      if (mode === 'past') {
-        const past = visible.filter(r => r._dt && r._dt < today);
-        past.sort((a,b) => b._dt - a._dt);          // newest past first
-        return past;
-      }
-      if (mode === 'upcoming') {
-        const future = visible.filter(r => !r._dt || r._dt >= today);
-        future.sort((a,b) => {
-          const A = a._dt ? a._dt.getTime() : Infinity;
-          const B = b._dt ? b._dt.getTime() : Infinity;
-          return A - B;                              // soonest first, undated last
-        });
-        return future;
-      }
-      return visible;
-    };
-
-    const renderGrid = (items, rotateMsPerImage) => {
-      const grid = el('div', { class:'newsgrid' });
-      items.forEach(x => grid.appendChild(renderCard(x, rotateMsPerImage)));
-      return grid;
-    };
-
-    // Generic pager (works for upcoming or past)
-    const mountWithPaging = (mount, items) => {
-      const limit  = parseInt(mount.getAttribute('data-limit') || '3', 10);
-      const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
-      const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
-
-      if (!pageMs || items.length <= limit) {
-        mount.innerHTML = '';
-        mount.appendChild(renderGrid(items.slice(0, limit), imageMs));
-        return;
-      }
-
-      const pages = [];
-      for (let i = 0; i < items.length; i += limit) pages.push(items.slice(i, i + limit));
-
-      let p = 0;
-      const show = (idx) => {
-        p = (idx + pages.length) % pages.length;
-        mount.innerHTML = '';
-        mount.appendChild(renderGrid(pages[p], imageMs));
-      };
-
-      show(0);
-      setInterval(() => show(p + 1), pageMs);
-    };
-
-    const renderInto = (mount, items) => {
-      const limit  = parseInt(mount.getAttribute('data-limit') || '0', 10);
-      const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
-      const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
-
-      if (pageMs) return mountWithPaging(mount, items);
-
-      const list = (!limit || items.length <= limit) ? items : items.slice(0, limit);
-      mount.innerHTML = '';
-      mount.appendChild(renderGrid(list, imageMs));
-    };
-
-    (async () => {
-      try {
-        const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
-        const raw = await res.json();
-        const rows = normalize(raw);
-
-        mounts.forEach(m => {
-          const mode = (m.getAttribute('data-mode') || 'upcoming').toLowerCase();
-          const list = filterSort(rows, mode);
-          renderInto(m, list);
-        });
-      } catch (e) {
-        console.error('Events feed error:', e);
-      }
-    })();
-  })();
-  </script>
-  <!-- === /Events feed === -->
+ <!-- Header -->
+ <header class="site-header">
+   <div class="container header-inner">
+     <a class="brand" href="index.html">
+       MEXSA<span class="pill">SYR</span>
+     </a>
+     <nav id="nav" class="nav">
+       <a href="index.html" aria-current="page">Inicio</a>
+       <a href="events.html">Eventos</a>
+       <a href="about.html">Nosotros</a>
+       <a href="join.html" class="cta">Únete</a>
+     </nav>
+     <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">☰</button>
+   </div>
+ </header>
+
+
+ <!-- Hero -->
+ <section class="hero hero--stadium" style="background-image:
+   linear-gradient(180deg, rgba(10,15,10,.35), rgba(10,15,10,.85)),
+   url('images/aquiestamos1.jpg');">
+   <div class="hero__overlay">
+     <div class="container hero__content">
+       <p class="pill" style="margin-bottom:.6rem;">Bienvenidos</p>
+       <h1 class="hero__title">Mexican Student Association @ Syracuse</h1>
+       <p class="hero__subtitle">Comunidad, cultura y acción — talleres, educación y eventos para todxs.</p>
+       <div class="actions">
+         <a class="btn" href="join.html">Únete hoy</a>
+         <a class="btn secondary" href="events.html">Ver calendario</a>
+       </div>
+     </div>
+   </div>
+ </section>
+
+
+ <!-- Quick highlights -->
+ <section class="strip">
+   <div class="container">
+     <div class="section__head"><h2>Noticias rápidas</h2></div>
+     <div class="newsgrid">
+       <article class="card">
+         <img class="card__img" src="images/mexsa2.png" alt="Conoce a la mesa directiva">
+         <div class="card__body">
+           <h3 class="card__title">Conoce a la Mesa Directiva</h3>
+           <p class="card__excerpt">Presentaciones del E-Board 24-25 — quiénes somos y en qué trabajamos.</p>
+           <a class="inline" href="about.html#eboard">Ver equipo →</a>
+         </div>
+       </article>
+       <article class="card">
+         <img class="card__img" src="images/tortilla.png" alt="Taller de tortillas">
+         <div class="card__body">
+           <h3 class="card__title">Taller de Tortillas</h3>
+           <p class="card__excerpt">Aprende técnicas tradicionales y el porqué cultural detrás del maíz.</p>
+           <a class="inline" href="events.html#tortillas">Detalles →</a>
+         </div>
+       </article>
+       <article class="card">
+         <img class="card__img" src="images/recursos1.png" alt="Activismo y comunidad">
+         <div class="card__body">
+           <h3 class="card__title">Solidaridad & Recursos</h3>
+           <p class="card__excerpt">Conoce tus derechos, recursos locales y formas de involucrarte.</p>
+           <a class="inline" href="events.html#recursos">Ver recursos →</a>
+         </div>
+       </article>
+       <article class="card">
+         <img class="card__img" src="images/aquiestamos1.jpg" alt="MEXSA puntitos">
+         <div class="card__body">
+           <h3 class="card__title">MEXSA puntitos</h3>
+           <p class="card__excerpt">Datos, tips y mini-posts culturales cada semana.</p>
+           <a class="inline" href="events.html#educacion">Explorar →</a>
+         </div>
+       </article>
+     </div>
+   </div>
+ </section>
+
+
+ <!-- Próximos eventos (dinámico desde Google Sheet) -->
+ <section class="section">
+   <div class="container">
+     <div class="section__head">
+       <h2>Próximos eventos destacados</h2>
+       <a class="link" href="events.html">Ver todo el calendario →</a>
+     </div>
+
+
+     <!-- Feed dinámico: muestra 3 a la vez y rota páginas si hay más -->
+     <div
+       data-events-feed
+       data-mode="upcoming"
+       data-limit="3"
+       data-image-rotate-ms="5000"
+       data-rotate-pages-ms="9000">
+     </div>
+     <!-- END dynamic feed -->
+   </div>
+ </section>
+
+
+ <!-- Eventos pasados (los 3 más recientes, con rotación de páginas) -->
+ <section class="strip">
+   <div class="container">
+     <div class="section__head">
+       <h2>Eventos pasados</h2>
+       <a class="link" href="events.html">Ver más →</a>
+     </div>
+
+
+     <div
+       data-events-feed
+       data-mode="past"
+       data-limit="3"
+       data-image-rotate-ms="5000"
+       data-rotate-pages-ms="9000">
+     </div>
+   </div>
+ </section>
+
+
+ <!-- Educación -->
+ <section class="section section--dark" id="educacion">
+   <div class="container">
+     <div class="section__head"><h2>Educación & Comunidad</h2></div>
+     <div class="newsgrid">
+       <article class="card">
+         <img class="card__img" src="images/diadelosmuertos1.jpeg" alt="Qué es Día de los Muertos">
+         <div class="card__body">
+           <h3 class="card__title">¿Qué es el Día de los Muertos?</h3>
+           <p class="card__excerpt">Tradición para honrar y celebrar la vida de quienes ya no están. Ofrendas, cempasúchil y memoria viva.</p>
+           <a class="inline" href="events.html#diadelosmuertos">Leer más →</a>
+         </div>
+       </article>
+
+
+       <article class="card">
+         <img class="card__img" src="images/Kyr1.png" alt="Conoce tus derechos">
+         <div class="card__body">
+           <h3 class="card__title">Conoce tus derechos</h3>
+           <p class="card__excerpt">Recursos bilingües sobre contacto con ICE y la policía. Mantén la calma y pide abogadx.</p>
+           <a class="inline" href="events.html#kyrights">Descargar carteles →</a>
+         </div>
+       </article>
+
+
+       <article class="card">
+         <img class="card__img" src="images/aquiestamos1.jpg" alt="Alligator Alcatraz">
+         <div class="card__body">
+           <h3 class="card__title">Alligator Alcatraz</h3>
+           <p class="card__excerpt">Información sobre el centro de detención en los Everglades y formas de ayudar.</p>
+           <a class="inline" href="https://immigrantjustice.org/ways-to-help/" target="_blank" rel="noopener">Actúa ahora →</a>
+         </div>
+       </article>
+
+
+       <article class="card">
+         <img class="card__img" src="images/lectura1.jpeg" alt="Lecturas recomendadas">
+         <div class="card__body">
+           <h3 class="card__title">Lecturas recomendadas</h3>
+           <p class="card__excerpt">Historia, arte y migración para empezar tu propio club de lectura.</p>
+           <a class="inline" href="events.html#lecturas">Ver lista →</a>
+         </div>
+       </article>
+     </div>
+   </div>
+ </section>
+
+
+ <!-- Members (auto from /images) -->
+ <section class="section">
+   <div class="container">
+     <div class="section__head"><h2>Nuestro equipo</h2></div>
+     <div id="members" class="gallery-grid"></div>
+   </div>
+ </section>
+
+
+ <!-- Únete + Social -->
+ <section class="section">
+   <div class="container">
+     <div class="section__head"><h2>Únete a la comunidad</h2></div>
+     <div class="grid" style="grid-template-columns:2fr 1fr; gap:1rem;">
+       <article class="card">
+         <div class="card__body">
+           <h3 class="card__title">Recibe noticias y eventos</h3>
+           <p class="card__excerpt">Inscríbete para enterarte de talleres, fiestas, colaboraciones y oportunidades.</p>
+           <a class="btn" href="join.html">Registrarme</a>
+         </div>
+       </article>
+       <article class="card">
+         <div class="card__body">
+           <h3 class="card__title">Síguenos</h3>
+           <p class="muted">Instagram, GroupMe, LinkedIn</p>
+           <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+             <a class="social-link"
+                href="https://www.instagram.com/mexsa.cuse/"
+                target="_blank" rel="noopener"
+                aria-label="Instagram de MEXSA">
+               <img class="card__img" style="height:90px"
+                    src="images/iglogo.jpeg" alt="Instagram" loading="lazy" decoding="async">
+             </a>
+
+
+             <a class="social-link"
+                href="https://groupme.com/join_group/108355187/lu7G3Xc1"
+                target="_blank" rel="noopener"
+                aria-label="Únete al GroupMe de MEXSA">
+               <img class="card__img" style="height:90px"
+                    src="images/groupme.jpeg" alt="GroupMe" loading="lazy" decoding="async">
+             </a>
+
+
+             <a class="social-link"
+                href="https://www.linkedin.com/in/mexsasu"
+                target="_blank" rel="noopener"
+                aria-label="LinkedIn de MEXSA SU">
+               <img class="card__img" style="height:90px"
+                    src="images/linkedln.png" alt="LinkedIn" loading="lazy" decoding="async">
+             </a>
+           </div>
+         </div>
+       </article>
+     </div>
+   </div>
+ </section>
+
+
+ <!-- Footer -->
+ <footer class="site-footer">
+   <div class="container footergrid">
+     <div>
+       <div class="brand brand--footer">MEXSA<span class="pill">SYR</span></div>
+       <p class="muted">Cultura, comunidad y orgullo mexicano en Syracuse University.</p>
+     </div>
+     <nav class="footernav">
+       <a href="index.html" aria-current="page">Inicio</a>
+       <a href="events.html">Eventos</a>
+       <a href="about.html">Nosotros</a>
+       <a href="join.html">Únete</a>
+     </nav>
+     <div class="footercta">
+       <p class="muted">¿Preguntas? <a href="mailto:mexsacuse@gmail.com">mexsacuse@gmail.com</a></p>
+       <a class="btn" href="join.html">Hazte miembro</a>
+     </div>
+   </div>
+   <div class="container legal">
+     <p>© <span id="year"></span> MEXSA @ Syracuse • All rights reserved.</p>
+   </div>
+ </footer>
+
+
+ <script src="main.js"></script>
+
+
+ <!-- Inline: auto-render members from your /images filenames -->
+ <script>
+   document.getElementById('year').textContent = new Date().getFullYear();
+
+
+   // One card per member. Uses the FIRST photo for each person.
+   const members = [
+     { name: "Carlos Silva", file: "carlos1.jpg" },
+     { name: "Cesar Barrera",  file: "cesar1.jpg" },
+     { name: "Danna Ochoa Cardenas",  file: "danna2.png" },
+     { name: "Emilia Monroy Hortos",    file: "emi2.png" },
+     { name: "Gaby Ramirez",   file: "gaby1.jpg" },
+     { name: "Jared Gonzalez",  file: "jared1.jpg" },
+     { name: "Jesús Garcia", file: "jesusg1.png" },
+     { name: "Jesús Tiburcio Zane", file: "jesust1.png" },
+     { name: "María Ruelas",  file: "maria1.jpg" },
+     { name: "Valeria Martinez Guiterrez",   file: "vale1.jpg" },
+     { name: "Vanessa Sanchez",   file: "vane1.png" },
+   ];
+
+
+   const mount = document.getElementById("members");
+   if (mount) {
+     members.forEach(({name, file}) => {
+       const fig = document.createElement("figure");
+       fig.className = "member-card";
+       const img = document.createElement("img");
+       img.loading = "lazy";
+       img.src = `images/${file}`;
+       img.alt = name;
+       const cap = document.createElement("figcaption");
+       cap.textContent = name;
+       fig.appendChild(img);
+       fig.appendChild(cap);
+       mount.appendChild(fig);
+     });
+   }
+ </script>
+
+
+ <!-- === Events feed (Google Sheet) === -->
+ <script>
+   // Your published Apps Script Web App endpoint:
+   window.EVENTS_API_URL = 'https://script.google.com/macros/s/AKfycbwwH-QNELsaWFbyMexOt4abYJIXTtCd6EyerkzpJoMcYFGjOhxgLkwTPULZLwAZMINn/exec';
+ </script>
+ <script>
+ (function () {
+   const API = window.EVENTS_API_URL;
+   const mounts = Array.from(document.querySelectorAll('[data-events-feed]'));
+   if (!API || !mounts.length) return;
+
+
+   const el = (tag, attrs = {}, kids = []) => {
+     const n = document.createElement(tag);
+     Object.entries(attrs).forEach(([k, v]) => {
+       if (k === 'class') n.className = v;
+       else if (k === 'html') n.innerHTML = v;
+       else n.setAttribute(k, v);
+     });
+     kids.forEach(k => n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k));
+     return n;
+   };
+
+
+   // Single-image view with auto-rotate if multiple
+   const imageRotator = (urls, rotateMs = 5000) => {
+     const wrap = el('div', { class: 'events-rotator' });
+     Object.assign(wrap.style, { position: 'relative' });
+
+
+     const img = el('img', { alt: '', loading: 'lazy' });
+     Object.assign(img.style, { width: '100%', borderRadius: '12px', display: 'block', height:'160px', objectFit:'cover', background:'#0f1a12' });
+     wrap.appendChild(img);
+
+
+     const setSrc = (u) => {
+       const clean = String(u||'').trim();
+       const busted = clean ? clean + (clean.includes('?')?'&':'?') + 'v=' + Date.now() : '';
+       img.onerror = () => { img.onerror = null; img.src = 'images/mexsa1.png'; };
+       img.src = busted || 'images/mexsa1.png';
+     };
+
+
+     let idx = urls && urls.length ? Math.floor(Math.random() * urls.length) : 0;
+     const list = (urls && urls.length) ? urls : ['images/mexsa1.png'];
+
+
+     const show = (i) => { idx = (i + list.length) % list.length; setSrc(list[idx]); };
+
+
+     let timer = null;
+     const start = () => {
+       if (timer || list.length < 2 || rotateMs <= 0) return;
+       timer = setInterval(() => show(idx + 1), rotateMs);
+     };
+     const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+
+
+     // pause/resume + click advance
+     document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+     wrap.addEventListener('click', () => { if (list.length > 1) show(idx + 1); });
+     wrap.addEventListener('mouseenter', stop);
+     wrap.addEventListener('mouseleave', start);
+
+
+     show(idx);
+     start();
+     return wrap;
+   };
+
+
+   const renderCard = (item, rotateMs) => {
+     const card = el('article', { class: 'card events-card' });
+     const media = imageRotator(item.images, rotateMs);
+     const body  = el('div', { class:'card__body' }, [
+       el('h3', { class:'card__title' }, [item.title || 'Evento']),
+       el('p',  { class:'muted' },      [item.whenText || item.when || '']),
+       item.description ? el('p',  { class:'card__excerpt'}, [item.description]) : el('span'),
+       item.link ? el('a', { class:'btn secondary', href:item.link, target:'_blank', rel:'noopener' }, ['Más info']) : el('span')
+     ]);
+     card.append(media, body);
+     return card;
+   };
+
+
+   const normalize = (data) => {
+     return (Array.isArray(data) ? data : []).map(x => {
+       const images = Array.isArray(x.images)
+         ? x.images
+         : String(x.images || x.image || '')
+             .split(',')
+             .map(s => s.trim())
+             .filter(Boolean);
+
+
+       const status = String(x.status || 'publish').toLowerCase();
+       const rawDate = String(x.date || x.when || '').trim();
+       const dt = rawDate ? new Date(rawDate) : null;
+
+
+       return {
+         title: x.title || x.name || '',
+         when: rawDate,
+         whenText: rawDate || '',
+         description: x.description || x.desc || '',
+         link: x.link || x.url || '',
+         images,
+         status,
+         _dt: isFinite(dt?.getTime?.()) ? dt : null
+       };
+     });
+   };
+
+
+   const filterSort = (rows, mode) => {
+     const today = new Date(); today.setHours(0,0,0,0);
+     const visible = rows.filter(r => !['hide','hidden','draft','no'].includes(r.status));
+
+
+     if (mode === 'past') {
+       const past = visible.filter(r => r._dt && r._dt < today);
+       past.sort((a,b) => b._dt - a._dt);          // newest past first
+       return past;
+     }
+     if (mode === 'upcoming') {
+       const future = visible.filter(r => !r._dt || r._dt >= today);
+       future.sort((a,b) => {
+         const A = a._dt ? a._dt.getTime() : Infinity;
+         const B = b._dt ? b._dt.getTime() : Infinity;
+         return A - B;                              // soonest first, undated last
+       });
+       return future;
+     }
+     return visible;
+   };
+
+
+   const renderGrid = (items, rotateMsPerImage) => {
+     const grid = el('div', { class:'newsgrid' });
+     items.forEach(x => grid.appendChild(renderCard(x, rotateMsPerImage)));
+     return grid;
+   };
+
+
+   // Generic pager (works for upcoming or past)
+   const mountWithPaging = (mount, items) => {
+     const limit  = parseInt(mount.getAttribute('data-limit') || '3', 10);
+     const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
+     const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
+
+
+     if (!pageMs || items.length <= limit) {
+       mount.innerHTML = '';
+       mount.appendChild(renderGrid(items.slice(0, limit), imageMs));
+       return;
+     }
+
+
+     const pages = [];
+     for (let i = 0; i < items.length; i += limit) pages.push(items.slice(i, i + limit));
+
+
+     let p = 0;
+     const show = (idx) => {
+       p = (idx + pages.length) % pages.length;
+       mount.innerHTML = '';
+       mount.appendChild(renderGrid(pages[p], imageMs));
+     };
+
+
+     show(0);
+     setInterval(() => show(p + 1), pageMs);
+   };
+
+
+   const renderInto = (mount, items) => {
+     const limit  = parseInt(mount.getAttribute('data-limit') || '0', 10);
+     const imageMs = parseInt(mount.getAttribute('data-image-rotate-ms') || '5000', 10);
+     const pageMs  = parseInt(mount.getAttribute('data-rotate-pages-ms') || '0', 10);
+
+
+     if (pageMs) return mountWithPaging(mount, items);
+
+
+     const list = (!limit || items.length <= limit) ? items : items.slice(0, limit);
+     mount.innerHTML = '';
+     mount.appendChild(renderGrid(list, imageMs));
+   };
+
+
+   (async () => {
+     try {
+       const res = await fetch(API + (API.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
+       const raw = await res.json();
+       const rows = normalize(raw);
+
+
+       mounts.forEach(m => {
+         const mode = (m.getAttribute('data-mode') || 'upcoming').toLowerCase();
+         const list = filterSort(rows, mode);
+         renderInto(m, list);
+       });
+     } catch (e) {
+       console.error('Events feed error:', e);
+     }
+   })();
+ })();
+ </script>
+ <!-- === /Events feed === -->
 </body>
 </html>
 
